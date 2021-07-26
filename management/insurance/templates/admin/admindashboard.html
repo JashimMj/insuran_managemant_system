@@ -1,0 +1,44 @@
+{%extends 'index.html'%}
+{%block contant%}
+{%load static%}
+<section class="content-header">
+      <h1>
+        Admin Dashboard
+      </h1>
+    </section>
+<section class="content">
+    <div class="row">
+        <a href="{%url 'branchinfo'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-home"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Branch</span>
+                        <span class="info-box-number">Information</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'createuser'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">User</span>
+                        <span class="info-box-number">create</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+    </div>
+</section>
+
+
+
+{%endblock%}

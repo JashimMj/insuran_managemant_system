@@ -1,0 +1,4 @@
+.info-box-icon >i:hover{
+    transition: transform 3s;
+    transform: rotate(1080deg);
+}
