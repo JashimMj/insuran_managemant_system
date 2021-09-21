@@ -85,6 +85,7 @@
                                         <label>Client Address</label>
                                          <select class="form-control custom-select mr-sm-2" id="select2" name="cname"
                                                 required>
+                                              <option selected>Select List</option>
 
                                          </select>
 
@@ -107,6 +108,7 @@
                                         <label for="baddress">Bank Branch</label>
                                         <select class="form-control custom-select mr-sm-2" id="bbranch" name="bbranch"
                                                 required>
+                                            <option selected>Select List</option>
                                         </select>
                                     </div>
                                 </div>
@@ -258,11 +260,11 @@ $.ajax({
     },
     success:function(response){
     alert("Some Right");
-    console.log(response.data[0].id);
+    console.log(response.caddress[0].id);
     $('#select2').empty();
-        for (var key in response.data)
+        for (var key in response.caddress)
         {
-        var tem = "<option value="+response.data[key].id+">"+response.data[key].Address+"</option>";
+        var tem = "<option value="+response.caddress[key].id+">"+response.caddress[key].Address+"</option>";
         $('#select2').append(tem);
 
         }
@@ -275,27 +277,34 @@ $.ajax({
 });
 
 });
-
 $('#bname').change(function(){
- var url=$('.subcall').attr('data-bank-url');
- var bnames= $(this).val();
-
+ var abc = $(this).val();
 $.ajax({
-    url:url,
+    url:"{%url 'qmarineselectbank'%}",
     data:{
-    'bnames':bnames
+    'abc' : abc
     },
-    success:function(data){
-    $('#bbranch').html(data)
+    success:function(response){
+    alert("Some Right");
+    console.log(response.ranch[0].id);
+    $('#bbranch').empty();
+        for (var key in response.ranch)
+        {
+        var tem = "<option value="+response.ranch[key].id+">"+response.ranch[key].Branch_Name+"</option>";
+        $('#bbranch').append(tem);
 
+        }
     },
     error:function(response){
     alert("Some Error");
-    }
+    },
 
 
-})
 });
+
+});
+
+
 $(document).ready(function(){
 
 var fdates= $('#fdate').val();
@@ -332,24 +341,34 @@ $.ajax({
 })
 
 });
-$('#bbranch').change(function(){
- var url=$('.subcall').attr('data-bankadd-url');
- var baddress= $(this).val();
 
+$('#bname, #bbranch').change(function(){
+var baddress= $(this).val();
 $.ajax({
-    url:url,
+    url:"{%url 'qmarineselectbankadd'%}",
     data:{
-    'baddress':baddress
+    'baddress' : baddress
     },
-    success:function(data){
-    $('#baddress').html(data)
+    success:function(response){
+    alert("Some Right");
+    console.log(response.baddress[0].id);
+    $('#baddress').empty();
+        for (var key in response.baddress)
+        {
+        var tem = "<option value="+response.baddress[key].id+">"+response.baddress[key].Address+"</option>";
+        $('#baddress').append(tem);
 
-    }
+        }
+    },
+    error:function(response){
+    alert("Some Error");
+    },
 
-
-})
 
 });
+
+});
+
 
 
 

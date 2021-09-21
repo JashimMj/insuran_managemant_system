@@ -819,18 +819,17 @@ def qmarineV(request):
 def qmarineselectclientV(request):
     cname = request.GET.get('cnames')
     caddress=ClentAddressInformation.objects.filter(Client_Name=cname)
-    # return render(request,'selectlist/clientaddresslist.html',{'caddress':caddress})
     return JsonResponse({'caddress':list(caddress.values())})
 
 def qmarineselectbankV(request):
-    bname = request.GET.get('bnames')
-    bbranch=BankBranch.objects.filter(Bank_Name=bname)
-    return render(request,'selectlist/bankbranchlist.html',{'bbranch':bbranch})
+    bname = request.GET.get('abc')
+    ranch=BankBranch.objects.filter(Bank_Name=bname)
+    return JsonResponse({'ranch':list(ranch.values())})
 
 def qmarineselectbankaddV(request):
     badd = request.GET.get('baddress')
     baddress=BankBranch.objects.filter(Bank_Name=badd)
-    return render(request,'selectlist/bankaddresslist.html',{'baddress':baddress})
+    return JsonResponse({'baddress':list(baddress.values())})
 
 
 def qmarinedateV(request):
