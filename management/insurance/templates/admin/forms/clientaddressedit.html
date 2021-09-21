@@ -1,0 +1,73 @@
+{%extends 'index.html'%}
+{%block contant%}
+
+<section class="content-header"
+         style="background-color:#00DCDC; padding:5px;">
+    <h1>
+        <b>Client Address Edit Information </b>
+    </h1>
+</section>
+
+{%for x in messages%}
+<div class="callout callout-info">
+    {{x}}
+</div>
+{%endfor%}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Client Address Edit</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form action="{%url 'clientaddressupdate' data.id%}" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail2" style="padding:5px;">Client Name</label>
+                            <input class="form-control" list="browse" name="cname" id="browser" value="{{data.Client_Name.id}}">
+                            <datalist id="browse">
+                                {%for y in client%}
+                                <option value="{{y.id}}">{{y.Client_Name}}</option>
+                                {%endfor%}
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="padding:5px;">Client Address</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Client Address"
+                                   name="address" value="{{data.Address}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail2" style="padding:5px;">Phone</label>
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Client Phone"
+                                   name="phone" value="{{data.Phone}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail3" style="padding:5px;">Email</label>
+                            <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Client Email"
+                                   name="email" value="{{data.Email}}">
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
+
+
+
+
+{%endblock%}

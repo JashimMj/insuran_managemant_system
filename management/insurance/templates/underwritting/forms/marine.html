@@ -1,0 +1,364 @@
+{%extends 'index.html'%}
+{%block contant%}
+<!-- Latest compiled and minified CSS -->
+
+<section class="content-header"
+         style="background-color:#00DCDC; padding:5px;">
+    <h1>
+        <b>Marine Insurance</b>
+    </h1>
+</section>
+
+{%for x in messages%}
+<div class="callout callout-info">
+    {{x}}
+</div>
+{%endfor%}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-8">
+
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Manrine Quotation</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form action="{%url 'branchinfosave'%}" method="POST"
+                      data-client-url="{%url 'qmarineselectclient'%}" data-bank-url="{%url 'qmarineselectbank'%}"
+                      data-bankadd-url="{%url 'qmarineselectbankadd'%}" data-fdate-url="{%url 'qmarinesendate'%}"
+                      enctype="multipart/form-data"
+                      class="subcall">
+                    {%csrf_token%}
+                    <div class="row">
+                        <div class="box-body">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Search Bill No</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                               placeholder="Bill No"
+                                               name="search" style="background-color:#66FFFF;">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail10">Last Bill No</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail10"
+                                               placeholder="Last Bill No"
+                                               name="lastbill">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail29">Bill NO</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail29"
+                                               placeholder="Branch Name"
+                                               name="name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail30">Bill Date</label>
+                                        <input type="date" class="form-control" id="exampleInputEmail30"
+                                               name="name" value="{{dases}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Client Name</label>
+                                        <select class="form-control custom-select mr-sm-2" id="client" name="cname"
+                                                required>
+                                            <option selected>Select List</option>
+                                            {%for x in Client%}
+                                            <option value="{{x.id}}">{{x.Client_Name}}</option>
+                                            {%endfor%}
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Client Address</label>
+                                         <select class="form-control custom-select mr-sm-2" id="select2" name="cname"
+                                                required>
+
+                                         </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bname">Bank Name</label>
+                                        <select class="form-control custom-select mr-sm-2" id="bname" name="cname"
+                                                required>
+                                            <option selected>Select List</option>
+                                            {%for x in Bank%}
+                                            <option value="{{x.id}}">{{x.Bank_Name}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="baddress">Bank Branch</label>
+                                        <select class="form-control custom-select mr-sm-2" id="bbranch" name="bbranch"
+                                                required>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="baddress">Bank Address</label>
+                                        <select class="form-control custom-select mr-sm-2" id="baddress" name="baddress"
+                                                required>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail18">Interest Covered</label>
+                                        <textarea class="form-control" name="icovered" id="exampleInputEmail18"
+                                                  placeholder="Interest Covered"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail19">Voyage From</label>
+                                        <textarea class="form-control" name="Vfrom" id="exampleInputEmail19"
+                                                  placeholder="Voyage From"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail9">Voyage To</label>
+                                        <textarea class="form-control" name="vto" id="exampleInputEmail9"
+                                                  placeholder="Voyage From"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Transit By</label>
+                                        <select class="form-control custom-select mr-sm-2" name="transitby" required>
+                                            <option selected>Select List</option>
+                                            {%for x in transit%}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%endfor%}
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Voyage Via</label>
+                                        <select class="form-control custom-select mr-sm-2" name="voyagevia" required>
+                                            <option selected>Select List</option>
+                                            {%for x in voya%}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%endfor%}
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fdate">From Date</label>
+                                        <input type="date" class="form-control" id="fdate"
+                                               placeholder="Branch Name"
+                                               name="fdate" value="{{dases}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" id="tsdate">
+                                        <label for="tdate">To Date</label>
+                                        <input type="date" class="form-control" id="tdate"
+                                               placeholder="Branch Name"
+                                               name="todate">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+</section>
+
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Company Information</h3>
+            <a class="btn btn-primary" style="float:right; padding-right:10px;" href="{%url 'branchinforeport'%}"
+               target="_blank"><i class="fa fa-print fa-1x" aria-hidden="true"></i></a>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>#</th>
+                    <th>Company Name</th>
+                    <th>Branch Code</th>
+                    <th>Branch Name</th>
+                    <th>Short Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Fax</th>
+                    <th>Logo</th>
+                    <th style="width: 40px">Edit</th>
+                    <th style="width: 40px">Delete</th>
+                </tr>
+                {%for x in companys%}
+                <tr>
+                    <td><b>{{forloop.counter}}</b></td>
+                    <td>{{x.Company_Name}}</td>
+                    <td>{{x.Branch_Code}}</td>
+                    <td>{{x.Name}}</td>
+                    <td>{{x.Short_Name}}</td>
+                    <td>{{x.Address}}</td>
+                    <td>{{x.Phone}}</td>
+                    <td>{{x.Email}}</td>
+                    <td>{{x.Fax}}</td>
+                    <td><img src="{{x.logo}}" alt="" style="width: 31px;"></td>
+                    <td><a href="{%url 'branchinfoedit' x.id%}" class="btn btn-primary"> Edit</a></td>
+                    <td><a href="{%url 'branchinfodelete' x.id%}" class="btn btn-danger"> Delete</a></td>
+
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</section>
+<script>
+$('#client').change(function(){
+ var cnames= $(this).val();
+$.ajax({
+    url:"{%url 'qmarineselectclient'%}",
+    data:{
+    'cnames':cnames
+    },
+    success:function(response){
+    alert("Some Right");
+    console.log(response.data[0].id);
+    $('#select2').empty();
+        for (var key in response.data)
+        {
+        var tem = "<option value="+response.data[key].id+">"+response.data[key].Address+"</option>";
+        $('#select2').append(tem);
+
+        }
+    },
+    error:function(response){
+    alert("Some Error");
+    },
+
+
+});
+
+});
+
+$('#bname').change(function(){
+ var url=$('.subcall').attr('data-bank-url');
+ var bnames= $(this).val();
+
+$.ajax({
+    url:url,
+    data:{
+    'bnames':bnames
+    },
+    success:function(data){
+    $('#bbranch').html(data)
+
+    },
+    error:function(response){
+    alert("Some Error");
+    }
+
+
+})
+});
+$(document).ready(function(){
+
+var fdates= $('#fdate').val();
+$.ajax({
+    url:"{%url 'qmarinesendate'%}",
+    data:{
+    'fdates':fdates
+    },
+    success:function(data){
+    $('#tdate').val(data.data.taken)
+    },
+    error:function(data){
+    alert("Some Error");
+    }
+
+})
+
+});
+$('#fdate').change(function(){
+
+var fdates= $('#fdate').val();
+$.ajax({
+    url:"{%url 'qmarinesendate'%}",
+    data:{
+    'fdates':fdates
+    },
+    success:function(data){
+    $('#tdate').val(data.data.taken)
+    },
+    error:function(response){
+    alert("Hello! I am !!");
+    }
+
+})
+
+});
+$('#bbranch').change(function(){
+ var url=$('.subcall').attr('data-bankadd-url');
+ var baddress= $(this).val();
+
+$.ajax({
+    url:url,
+    data:{
+    'baddress':baddress
+    },
+    success:function(data){
+    $('#baddress').html(data)
+
+    }
+
+
+})
+
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+{%endblock%}

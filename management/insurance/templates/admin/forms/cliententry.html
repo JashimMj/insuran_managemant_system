@@ -1,0 +1,92 @@
+{%extends 'index.html'%}
+{%block contant%}
+
+<section class="content-header"
+         style="background-color:#00DCDC; padding:5px;">
+    <h1>
+       <b>Client Information</b>
+    </h1>
+</section>
+
+{%for x in messages%}
+<div class="callout callout-info">
+    {{x}}
+</div>
+{%endfor%}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Client Entry</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form action="{%url 'clientsave'%}" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail">Client Name</label>
+                            <input type="text" class="form-control" id="exampleInputEmail" placeholder="Client Name"
+                                   name="cname">
+                        </div>
+
+
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
+
+<section>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Client Information</h3>
+                <a class="btn btn-primary" style="float:right; padding-right:10px;" href="{%url 'clientinfoPDF'%}" target="_blank"><i class="fa fa-print fa-1x" aria-hidden="true"></i></a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>Clinet Name</th>
+                        <th>Branch Code</th>
+                        <th>Branch Name</th>
+
+                        <th style="width: 40px">Edit</th>
+                        <th style="width: 40px">Delete</th>
+                    </tr>
+                    {%for x in client%}
+                    <tr>
+                        <td><b>{{forloop.counter}}</b></td>
+                        <td>{{x.Client_Name}}</td>
+                        <td>{{x.branch.Branch_Code}}</td>
+                        <td>{{x.branch.Name}}</td>
+                        <td><a href="{%url 'clientedit' x.id%}" class="btn btn-primary"> Edit</a></td>
+                        <td><a href="{%url 'clientdelete' x.id%}" class="btn btn-danger"> Delete</a></td>
+
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+</section>
+
+
+{%endblock%}

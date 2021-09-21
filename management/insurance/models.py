@@ -45,3 +45,102 @@ class UserBranchM(models.Model):
     Branch_Code=models.ForeignKey(BranchInformationM,on_delete=models.CASCADE,null=True,blank=True)
     objects=models.Manager()
 
+class EmployeesinfoM(models.Model):
+    id=models.AutoField(primary_key=True)
+    Name=models.CharField(max_length=255,null=True,blank=True)
+    Branch=models.ForeignKey(BranchInformationM,on_delete=models.CASCADE,null=True,blank=True)
+    Department=models.CharField(max_length=255,null=True,blank=True)
+    Designation=models.CharField(max_length=255,null=True,blank=True)
+    Father_Name=models.CharField(max_length=255,null=True,blank=True)
+    Mother_Name=models.CharField(max_length=255,null=True,blank=True)
+    Married=models.CharField(max_length=255,null=True,blank=True)
+    Spouse_Name=models.CharField(max_length=255,null=True,blank=True)
+    Sex=models.CharField(max_length=255,null=True,blank=True)
+    Birth_Date=models.DateField(null=True,blank=True)
+    Present_Address=models.TextField(null=True,blank=True)
+    Permanant_Address=models.TextField(null=True,blank=True)
+    Phone=models.CharField(max_length=255,null=True,blank=True)
+    Email=models.EmailField(null=True,blank=True)
+    Nid=models.CharField(max_length=255,null=True,blank=True)
+    Joining_Date=models.DateField(null=True,blank=True)
+    Probationary_Period=models.CharField(max_length=50,null=True,blank=True)
+    Confirmation_dates=models.DateField(null=True,blank=True)
+    Status = models.CharField(max_length=100, null=True, blank=True)
+    Type = models.CharField(max_length=100, null=True, blank=True)
+    Emp_Type = models.CharField(max_length=100, null=True, blank=True)
+    objects = models.Manager()
+
+class EmployeesEducation(models.Model):
+    id = models.AutoField(primary_key=True)
+    Ename=models.ForeignKey(EmployeesinfoM,on_delete=models.CASCADE,null=True,blank=True)
+    Exam_Name=models.CharField(max_length=50,null=True,blank=True)
+    Institute=models.CharField(max_length=255,null=True,blank=True)
+    Board=models.CharField(max_length=50,null=True,blank=True)
+    Pass_Year=models.CharField(max_length=50,null=True,blank=True)
+    Gpa=models.CharField(max_length=50,null=True,blank=True)
+    objects = models.Manager()
+
+class EmployeesSalary(models.Model):
+    id = models.AutoField(primary_key=True)
+    Ename = models.ForeignKey(EmployeesinfoM, on_delete=models.CASCADE, null=True, blank=True)
+    Designation = models.CharField(max_length=255, null=True, blank=True)
+    Effect_Date = models.DateField(null=True, blank=True)
+    Basic = models.IntegerField(null=True, blank=True)
+    House_Rent = models.IntegerField(null=True, blank=True)
+    House_Maintenance = models.IntegerField(null=True, blank=True)
+    Hospital_Allowance = models.IntegerField(null=True, blank=True)
+    Conveyance_Allowance = models.IntegerField(null=True, blank=True)
+    Entertainment_Allowance = models.IntegerField(null=True, blank=True)
+    Other = models.IntegerField(null=True, blank=True)
+    Gross = models.IntegerField(null=True, blank=True)
+    Income_Tax = models.IntegerField(null=True, blank=True)
+    objects = models.Manager()
+
+
+class ClientInformation(models.Model):
+    id = models.AutoField(primary_key=True)
+    Client_Name=models.CharField(max_length=255,null=True,blank=True)
+    branch=models.ForeignKey(BranchInformationM,on_delete=models.CASCADE,null=True,blank=True)
+    objects = models.Manager()
+
+class ClentAddressInformation(models.Model):
+    id = models.AutoField(primary_key=True)
+    Client_Name=models.ForeignKey(ClientInformation,on_delete=models.CASCADE,null=True,blank=True)
+    Address=models.CharField(max_length=700,null=True,blank=True)
+    Phone=models.CharField(max_length=55,null=True,blank=True)
+    Email=models.EmailField(max_length=55,null=True,blank=True)
+    objects = models.Manager()
+
+
+class Bankinformation(models.Model):
+    id = models.AutoField(primary_key=True)
+    Bank_Name=models.CharField(max_length=255,null=True,blank=True)
+    branch=models.ForeignKey(BranchInformationM,on_delete=models.CASCADE,null=True,blank=True)
+    objects = models.Manager()
+
+
+class BankBranch(models.Model):
+    id = models.AutoField(primary_key=True)
+    Bank_Name=models.ForeignKey(Bankinformation,on_delete=models.CASCADE,null=True,blank=True)
+    Branch_Name=models.CharField(max_length=700,null=True,blank=True)
+    Address=models.CharField(max_length=700,null=True,blank=True)
+    Phone=models.CharField(max_length=55,null=True,blank=True)
+    Email=models.EmailField(max_length=55,null=True,blank=True)
+    objects = models.Manager()
+
+class TransitBy(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=255,null=True,blank=True)
+    objects = models.Manager()
+
+class VoyageVia(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=255,null=True,blank=True)
+    objects = models.Manager()
+
+
+
+
+
+
+

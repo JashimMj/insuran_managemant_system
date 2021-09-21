@@ -1,11 +1,13 @@
 {%extends 'index.html'%}
 {%block contant%}
 {%load static%}
-<section class="content-header">
-      <h1>
-        Admin Dashboard
-      </h1>
-    </section>
+<section class="content-header"
+         style="background-color:#00DCDC; padding:5px;">
+    <h1>
+       <b> Admin Dashboard</b>
+    </h1>
+</section>
+
 <section class="content">
     <div class="row">
         <a href="{%url 'branchinfo'%}">
@@ -30,6 +32,90 @@
                     <div class="info-box-content">
                         <span class="info-box-number">User</span>
                         <span class="info-box-number">create</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'client'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Client</span>
+                        <span class="info-box-number">Information</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'clientaddress'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-address-book" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Client Address</span>
+                        <span class="info-box-number">Information</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'bank'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-university" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Bank</span>
+                        <span class="info-box-number">Information</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'bankaddress'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-first-order" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Bank Branch</span>
+                        <span class="info-box-number">Information</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'transit'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-train" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Transit</span>
+                        <span class="info-box-number">Information</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </a>
+        <a href="{%url 'voyage'%}">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-truck" aria-hidden="true"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-number">Voyage Via</span>
+                        <span class="info-box-number">Information</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
