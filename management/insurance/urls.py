@@ -53,7 +53,14 @@ urlpatterns = [
     path('transit/by/update/<int:id>', views.transitupdateV, name="transitupdate"),
     path('transit/by/delete/<int:id>', views.transitdeleteV, name="transitdelete"),
     path('transit/by/report/', views.transitPDFV, name="transitpdf"),
-    #-----------------------Transit By-------------------------------
+    #-----------------------Currency-------------------------------
+    path('currency/', views.currencyV, name="currency"),
+    path('currency/save/', views.currencysaveV, name="currencysave"),
+    path('currency/edit/<int:id>', views.currencyeditV, name="currencyedit"),
+    path('currency/update/<int:id>', views.currencyupdateV, name="currencyupdate"),
+    path('currency/delete/<int:id>', views.currencydeleteV, name="currencydelete"),
+    path('currency/report/', views.currencyPDFV, name="currencypdf"),
+    # -----------------------Transit By-------------------------------
     path('Voyage/Via/', views.voyageviaV, name="voyage"),
     path('Voyage/Via/save/', views.voyageviasaveV, name="voyageviasave"),
     path('Voyage/Via/edit/<int:id>', views.voyageeditV, name="voyageedit"),
@@ -67,6 +74,7 @@ urlpatterns = [
     path('hr/dashboard/', views.hrdashboarV, name="hrdashboar"),
     # -----------------------------------Employees Info--------------------
     path('employees/info/', views.employeesinfoV, name="employeesinfo"),
+    path('employees/info/select', views.employeesinfoselectV, name="employeesinfoselect"),
     # -----------------------------------Under Writting --------------------
     path('uw/dashboard/', views.uwdashboardV, name="uwdashboard"),
     path('uw/quotation/dashboard/', views.quwdashboardV, name="quwdashboard"),

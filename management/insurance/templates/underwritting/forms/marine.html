@@ -70,7 +70,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Client Name</label>
-                                        <select class="form-control custom-select mr-sm-2" id="client" name="cname"
+                                        <select class="form-control custom-select mr-sm-2 selectpicker"   data-show-subtext="true" data-live-search="true" id="client" name="cname"
                                                 required>
                                             <option selected>Select List</option>
                                             {%for x in Client%}
@@ -181,6 +181,77 @@
                                                name="todate">
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" id="amount">
+                                        <label for="tdate">Amount</label>
+                                        <input type="text" class="form-control" id="amounts"
+                                               placeholder="Amount"
+                                               name="amount">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" id="extra">
+                                        <label for="tdate">Extra</label>
+                                        <input type="text" class="form-control" id="extras"
+                                               placeholder="Extra"
+                                               name="extra1">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" id="extra2">
+                                        <label for="tdate">Extra</label>
+                                        <input type="text" class="form-control" id="extras2"
+                                               placeholder="Extra Another"
+                                               name="extra2">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group" id=current>
+                                        <label for="tdate">Currency</label>
+                                        <select class="form-control custom-select mr-sm-2" name="Currency" required>
+                                            <option selected>Select List</option>
+                                            {%for x in currencys%}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group" id="Rate">
+                                        <label for="tdate">Rate</label>
+                                        <input type="text" class="form-control" id="Rates"
+                                               placeholder="Rate"
+                                               name="rate">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group" id="bdt">
+                                        <label for="tdate">BDT Amount</label>
+                                        <input type="text" class="form-control" id="bdts"
+                                               placeholder="BDT Amount"
+                                               name="bdt">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="Declaration">Declaration</label>
+                                        <textarea class="form-control" name="vto" id="Declaration"
+                                                  placeholder="Declaration"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group" id="produce">
+                                        <label for="tdate">Currency</label>
+                                        <select class="form-control custom-select mr-sm-2" name="produce" required>
+                                            <option selected>Select List</option>
+                                            {%for x in currencys%}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -202,54 +273,7 @@
     </div>
 </section>
 
-<section>
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Company Information</h3>
-            <a class="btn btn-primary" style="float:right; padding-right:10px;" href="{%url 'branchinforeport'%}"
-               target="_blank"><i class="fa fa-print fa-1x" aria-hidden="true"></i></a>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
-            <table class="table table-striped">
-                <tbody>
-                <tr>
-                    <th>#</th>
-                    <th>Company Name</th>
-                    <th>Branch Code</th>
-                    <th>Branch Name</th>
-                    <th>Short Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Fax</th>
-                    <th>Logo</th>
-                    <th style="width: 40px">Edit</th>
-                    <th style="width: 40px">Delete</th>
-                </tr>
-                {%for x in companys%}
-                <tr>
-                    <td><b>{{forloop.counter}}</b></td>
-                    <td>{{x.Company_Name}}</td>
-                    <td>{{x.Branch_Code}}</td>
-                    <td>{{x.Name}}</td>
-                    <td>{{x.Short_Name}}</td>
-                    <td>{{x.Address}}</td>
-                    <td>{{x.Phone}}</td>
-                    <td>{{x.Email}}</td>
-                    <td>{{x.Fax}}</td>
-                    <td><img src="{{x.logo}}" alt="" style="width: 31px;"></td>
-                    <td><a href="{%url 'branchinfoedit' x.id%}" class="btn btn-primary"> Edit</a></td>
-                    <td><a href="{%url 'branchinfodelete' x.id%}" class="btn btn-danger"> Delete</a></td>
 
-                </tr>
-                {%endfor%}
-                </tbody>
-            </table>
-        </div>
-        <!-- /.box-body -->
-    </div>
-</section>
 <script>
 $('#client').change(function(){
  var cnames= $(this).val();
@@ -265,7 +289,7 @@ $.ajax({
         for (var key in response.caddress)
         {
         var tem = "<option value="+response.caddress[key].id+">"+response.caddress[key].Address+"</option>";
-        $('#select2').append(tem);
+        $('#select2').html(tem);
 
         }
     },
@@ -291,7 +315,7 @@ $.ajax({
         for (var key in response.ranch)
         {
         var tem = "<option value="+response.ranch[key].id+">"+response.ranch[key].Branch_Name+"</option>";
-        $('#bbranch').append(tem);
+        $('#bbranch').html(tem);
 
         }
     },
@@ -356,7 +380,7 @@ $.ajax({
         for (var key in response.baddress)
         {
         var tem = "<option value="+response.baddress[key].id+">"+response.baddress[key].Address+"</option>";
-        $('#baddress').append(tem);
+        $('#baddress').html(tem);
 
         }
     },

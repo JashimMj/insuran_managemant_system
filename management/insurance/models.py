@@ -44,6 +44,9 @@ class UserBranchM(models.Model):
     User_Id=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     Branch_Code=models.ForeignKey(BranchInformationM,on_delete=models.CASCADE,null=True,blank=True)
     objects=models.Manager()
+    def __str__(self):
+        return self.User_Id.username +' ' +self.Branch_Code.Name
+
 
 class EmployeesinfoM(models.Model):
     id=models.AutoField(primary_key=True)
@@ -132,12 +135,23 @@ class TransitBy(models.Model):
     id = models.AutoField(primary_key=True)
     name=models.CharField(max_length=255,null=True,blank=True)
     objects = models.Manager()
+    def __str__(self):
+        return self.name
 
 class VoyageVia(models.Model):
     id = models.AutoField(primary_key=True)
     name=models.CharField(max_length=255,null=True,blank=True)
     objects = models.Manager()
+    def __str__(self):
+        return self.name
 
+
+class Currency(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=255,null=True,blank=True)
+    objects = models.Manager()
+    def __str__(self):
+        return self.name
 
 
 

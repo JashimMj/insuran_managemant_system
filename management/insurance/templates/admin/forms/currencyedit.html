@@ -1,0 +1,57 @@
+{%extends 'index.html'%}
+{%block contant%}
+
+<section class="content-header"
+         style="background-color:#00DCDC; padding:5px;">
+    <h1>
+       <b>Currency Information Edit</b>
+    </h1>
+</section>
+
+{%for x in messages%}
+<div class="callout callout-info">
+    {{x}}
+</div>
+{%endfor%}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Currency Edit Entry</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form action="{%url 'currencyupdate' data.id%}" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail">Currency</label>
+                            <input type="text" class="form-control" id="exampleInputEmail" placeholder="Voyage Via"
+                                   name="currency" value="{{data.name}}">
+                        </div>
+
+
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</section>
+
+
+
+
+
+{%endblock%}

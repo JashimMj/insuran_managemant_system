@@ -1,8 +1,99 @@
 {%extends 'index.html'%}
 {%block contant%}
+{%load static%}
+<style xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+#regForm {
+  background-color: #ffffff;
+
+  font-family: Raleway;
+  padding: 10px;
+
+  min-width: 300px;
+}
+
+h1 {
+  text-align: center;
+}
+
+input {
+  padding: 5px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #04AA6D;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: Raleway;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #04AA6D;
+}
+
+
+
+
+
+
+
+</style>
 <section class="content-header">
     <h1>
-        Branch Information
+        Employees Information
     </h1>
 </section>
 
@@ -14,128 +105,331 @@
 
 <section class="content">
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Branch Information</h3>
+
+
+        <form id="regForm" action="/action_page.php">
+
+            <!-- One "tab" for each step in the form: -->
+            <div class="tab">
+                <div class="row">
+                    <h1>General Information</h1>
+                    <div class="col-md-6">
+                        <label>Search Branch</label>
+
+                        <p><select class="form-control custom-select mr-sm-2 selectpicker" data-show-subtext="true"
+                                data-live-search="true" name="producer" id="branch" required>
+                            <option selected>Select List</option>
+                            {%for x in employees%}
+                            <option value="{{x.id}}">{{x.Name}}</option>
+                            {%endfor%}
+                        </select></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>ID No</label>
+                        <p><input placeholder="ID Number" oninput="this.className = ''" name="idno" value="{{number}}"
+                                  id="idno"
+                                  readonly></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Name</label>
+                        <p><input placeholder="Name" oninput="this.className = ''" name="lname" id="lname"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Department</label>
+                        <p><input placeholder="Department" oninput="this.className = ''" name="department"
+                                  id="department"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Designation</label>
+                        <p><input placeholder="Designation" oninput="this.className = ''" name="designation"
+                                  id="designation"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Father Name</label>
+                        <p><input placeholder="Father Name" oninput="this.className = ''" name="father_Name"
+                                  id="father_Name"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Mother Name</label>
+                        <p><input placeholder="Mother Name" oninput="this.className = ''" name="mother_Name"
+                                  id="mother_Name"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Married</label>
+                        <p><select class="form-control custom-select mr-sm-2" name="Married" id="married" required>
+                            <option selected>Select List</option>
+                            <option value="Yes">Yes</option>
+                            <option value="NO">No</option>
+
+                        </select></p>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Present Address</label>
+                        <p><textarea  class="form-control" oninput="this.className = ''" name="present_Address"
+                                   id="Present_Address" ></textarea></p>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Permanant Address</label>
+                        <p><textarea  class="form-control" oninput="this.className = ''" name="permanant_Address"
+                                   id="Permanant_Address" ></textarea></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Spouse Name</label>
+                        <p><input placeholder="Spouse_Name" oninput="this.className = ''" name="spouse_Name"
+                                  id="spouse_Name"></p>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <label>Sex</label>
+                        <p><select class="form-control custom-select mr-sm-2" name="sex" id="sex" required>
+                            <option selected>Select List</option>
+
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+
+                        </select></p>
+                    </div>
+                    <div class="col-md-12">
+                        <label>National id card</label>
+                        <p><input placeholder="National id card" oninput="this.className = ''" name="nid"
+                                  id="NID"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Birth Date</label>
+                        <p><input class="form-control" oninput="this.className = ''" name="birth_Date" type="date"
+                                  id="Birth_Date"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Phone</label>
+                        <p><input placeholder="National id card" oninput="this.className = ''" name="phone"
+                                  id="Phone"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email</label>
+                        <p><input placeholder="Email" oninput="this.className = ''" name="email"
+                               id="Email"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Joining Date</label>
+                        <p><input placeholder="Joining Date" oninput="this.className = ''" name="joining_Date" type="date"
+                               id="Joining_Date"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Confirmation dates</label>
+                        <p><input placeholder="Confirmation dates" oninput="this.className = ''" name="Cconfirmation_dates" type="date"
+                               id="Confirmation_dates"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Probationary Period</label>
+                        <p><input placeholder="Probationary Period" oninput="this.className = ''" name="probationary_Period"
+                               id="Probationary_Period"></p>
+                    </div>
+                     <div class="col-md-12">
+                        <label>Job Status</label>
+                        <p><select class="form-control custom-select mr-sm-2" name="status" id="Status" required>
+                            <option selected>Select List</option>
+                            <option value="Active">Active</option>
+                            <option value="Released">Released</option>
+                            <option value="Death">Death</option>
+                            <option value="Terminated">Terminated</option>
+                            <option value="Dismissal">Dismissal</option>
+                            <option value="Retired">Retired</option>
+                        </select></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Job Type</label>
+                        <p><select class="form-control custom-select mr-sm-2" name="type" id="Type" required>
+                            <option selected>Select List</option>
+                            <option value="Permanent">Permanent</option>
+                            <option value="Probationary">Probationary</option>
+                            <option value="Contract Basis">Contract Basis</option>
+
+                        </select></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Employees Type</label>
+                        <p><select class="form-control custom-select mr-sm-2" name="emp_Type" id="Emp_Type" required>
+                            <option selected>Select List</option>
+                            <option value="Marketing Officer">Marketing Officer</option>
+                            <option value="Desk Officer">Desk Officer</option>
+                            <option value="Support Staff">Support Staff</option>
+                            <option value="Branch In-charge">Branch In-charge</option>
+                            <option value="Head Of Department">Head Of Department</option>
+
+                        </select></p>
+                    </div>
+
                 </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                <form action="{%url 'branchinfosave'%}" method="POST" enctype="multipart/form-data">
-                    {%csrf_token%}
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail">Company Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail" placeholder="Company Name"
-                                   name="cname">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Branch Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Branch Name"
-                                   name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail2">Branch Address</label>
-                            <textarea class="form-control" name="address" id="exampleInputEmail2"
-                                      placeholder="Branch Address"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail3">Branch Short Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail3"
-                                   placeholder="Branch Short Name" name="sname">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail4">Branch Phone</label>
-                            <input type="text" class="form-control" id="exampleInputEmail4" placeholder="Branch Phone"
-                                   name="phone">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail5">Branch Fax</label>
-                            <input type="text" class="form-control" id="exampleInputEmail5" placeholder="Branch Fax"
-                                   name="fax">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail6">Branch Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail6" placeholder="Branch Email"
-                                   name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail7">Branch Code</label>
-                            <input type="text" class="form-control" id="exampleInputEmail7" placeholder="Branch Code"
-                                   name="bcode">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail8">Branch Logo</label>
-                            <input type="file" class="form-control" id="exampleInputEmail8" placeholder="Branch Logo"
-                                   name="logo">
-                        </div>
-
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
             </div>
 
 
-        </div>
-        <div class="col-md-3"></div>
+
+            <div class="tab">Contact Info:
+                <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+                <p><input placeholder="Phone..." oninput="this.className = ''" name="phone"></p>
+            </div>
+            <div class="tab">Birthday:
+                <p><input placeholder="dd" oninput="this.className = ''" name="dd"></p>
+                <p><input placeholder="mm" oninput="this.className = ''" name="nn"></p>
+                <p><input placeholder="yyyy" oninput="this.className = ''" name="yyyy"></p>
+            </div>
+            <div class="tab">Login Info:
+                <p><input placeholder="Username..." oninput="this.className = ''" name="uname"></p>
+                <p><input placeholder="Password..." oninput="this.className = ''" name="pword" type="password"></p>
+            </div>
+            <div class="tab">Login a:
+                <p><input placeholder="Username..." oninput="this.className = ''" name="uname"></p>
+                <p><input placeholder="Password..." oninput="this.className = ''" name="pword" type="password"></p>
+            </div>
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+
+        </form>
+
+        <script>
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+function showTab(n) {
+  // This function will display the specified tab of the form...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  //... and fix the Previous/Next buttons:
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
+  } else {
+    document.getElementById("prevBtn").style.display = "inline";
+  }
+  if (n == (x.length - 1)) {
+    document.getElementById("nextBtn").innerHTML = "Submit";
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Next";
+  }
+  //... and run a function that will display the correct step indicator:
+  fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+  // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab");
+  // Exit the function if any field in the current tab is invalid:
+  if (n == 1 && !validateForm()) return false;
+  // Hide the current tab:
+  x[currentTab].style.display = "none";
+  // Increase or decrease the current tab by 1:
+  currentTab = currentTab + n;
+  // if you have reached the end of the form...
+  if (currentTab >= x.length) {
+    // ... the form gets submitted:
+    document.getElementById("regForm").submit();
+    return false;
+  }
+  // Otherwise, display the correct tab:
+  showTab(currentTab);
+}
+
+function validateForm() {
+  // This function deals with validation of the form fields
+  var x, y, i, valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  // A loop that checks every input field in the current tab:
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].className += " invalid";
+      // and set the current valid status to false
+<!--      valid = false;-->
+    }
+  }
+  // If the valid status is true, mark the step as finished and valid:
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; // return the valid status
+}
+
+function fixStepIndicator(n) {
+  // This function removes the "active" class of all steps...
+  var i, x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
+  }
+  //... and adds the "active" class on the current step:
+  x[n].className += " active";
+}
+
+
+
+
+
+
+
+        </script>
+
     </div>
 </section>
+<script>
 
-<section>
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Company Information</h3>
-                <a class="btn btn-primary" style="float:right; padding-right:10px;" href="{%url 'branchinforeport'%}" target="_blank"><i class="fa fa-print fa-1x" aria-hidden="true"></i></a>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-                <table class="table table-striped">
-                    <tbody>
-                    <tr>
-                        <th>#</th>
-                        <th>Employees Name</th>
-                        <th>Branch Code</th>
-                        <th>Branch Name</th>
-                        <th>Short Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Fax</th>
-                        <th>Logo</th>
-                        <th style="width: 40px">Edit</th>
-                        <th style="width: 40px">Delete</th>
-                    </tr>
-                    {%for x in companys%}
-                    <tr>
-                        <td><b>{{forloop.counter}}</b></td>
-                        <td>{{x.Company_Name}}</td>
-                        <td>{{x.Branch_Code}}</td>
-                        <td>{{x.Name}}</td>
-                        <td>{{x.Short_Name}}</td>
-                        <td>{{x.Address}}</td>
-                        <td>{{x.Phone}}</td>
-                        <td>{{x.Email}}</td>
-                        <td>{{x.Fax}}</td>
-                        <td><img src="{{x.logo}}" alt="" style="width: 31px;"></td>
-                        <td><a href="{%url 'branchinfoedit' x.id%}" class="btn btn-primary"> Edit</a></td>
-                        <td><a href="{%url 'branchinfodelete' x.id%}" class="btn btn-danger"> Delete</a></td>
+$('#branch').change(function(){
+ var bname= $(this).val();
+$.ajax({
+    url:"{%url 'employeesinfoselect'%}",
+    data:{
+    'bname':bname
+    },
+    success:function(response){
+        for (var key in response.employees)
+        {
+        console.log(response.employees[key].id)
+        $('#idno').val(response.employees[key].id);
+        $('#lname').val(response.employees[key].Name);
+        $('#department').val(response.employees[key].Department);
+        $('#designation').val(response.employees[key].Designation);
+        $('#father_Name').val(response.employees[key].Father_Name);
+        $('#mother_Name').val(response.employees[key].Mother_Name);
+        $('#spouse_Name').val(response.employees[key].Spouse_Name);
+        $('#Present_Address').val(response.employees[key].Present_Address);
+        $('#Permanant_Address').val(response.employees[key].Permanant_Address);
+        $('#NID').val(response.employees[key].Nid);
+        $('#Birth_Date').val(response.employees[key].Birth_Date);
+        $('#married').html("<option value="+response.employees[key].Married+">"+response.employees[key].Married+"</option>"+"<option value=No>No</option>");
+        $('#sex').html("<option value="+response.employees[key].Sex+">"+response.employees[key].Married+"</option>"+"<option value=Female>Female</option>");
+        $('#Status').html("<option value="+response.employees[key].Status+">"+response.employees[key].Status+"</option>"+"<option value=Active>Active</option>"+"<option value=Released>Released</option>"+"<option value=Death>Death</option>"+"<option value=Terminated>Terminated</option>"+"<option value=Dismissal>Dismissal</option>"+"<option value=Retired>Retired</option>");
+        $('#Emp_Type').html("<option value="+response.employees[key].Emp_Type+">"+response.employees[key].Emp_Type+"</option>"+"<option value=Marketing Officer>Marketing Officer</option>"+"<option value=Desk Officer>Desk Officer</option>"+"<option value=Support Staff>Support Staff</option>"+"<option value=Branch In-charge>Branch In-charge</option>"+"<option value=Head of Department>Head of Department</option>"+"<option value=Retired>Retired</option>");
+        $('#Type').html("<option value="+response.employees[key].Type+">"+response.employees[key].Type+"</option>"+"<option value=Permanent>Permanent</option>"+"<option value=Probationary>Probationary</option>"+"<option value=Contract Basis>Contract Basis</option>");
+        $('#Phone').val(response.employees[key].Phone);
+        $('#Email').val(response.employees[key].Email);
+        $('#Joining_Date').val(response.employees[key].Joining_Date);
+        $('#Probationary_Period').val(response.employees[key].Probationary_Period);
+        $('#Confirmation_dates').val(response.employees[key].Confirmation_dates);
+        }
+    },
+    error:function(response){
+    alert("Some Error");
+    },
 
-                    </tr>
-                    {%endfor%}
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-</section>
+
+});
+
+});
+
+
+
+</script>
 
 {%endblock%}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Process Form</title>
+	<link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+	<header>
+		<div class="container">
+			<div class="logo">
+				<h1>M-SoftTech</h1>
+			</div>
+			<div class="menu">
+				<ul>
+					<li><a href="">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Service</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</header>
+
+<div class="form-1">
+	<div class="container">
+		<h1><i class="fa fa-user-o"></i> &nbsp; What is Your Name</h1>
+		<input type="text" placeholder="First Name" class="input-1">
+		<input type="text" placeholder="Last Name" class="input-1">
+		<div class="clearfix"></div>
+		<button class="conti-1" disabled="true">Continue &nbsp;<i class="fa fa-angle-right"></i></button>
+	</div>
+
+</div>
+
+
+
+<div class="form-2">
+	<div class="container">
+		<h1><i class="fa fa-language"></i> &nbsp; Select Your Language</h1>
+		<br/><br/>
+		<input type="checkbox" class="check"><label>English</label>
+		<input type="checkbox" class="check"><label>Hindi</label>
+		<div class="clearfix"></div>
+		<button class="conti-2" disabled="true">Continue &nbsp;<i class="fa fa-angle-right"></i></button>
+	</div>
+
+</div>
+
+<div class="form-3">
+	<div class="container">
+		<h1><i class="fa fa-globe"></i> &nbsp; Add Your Address</h1>
+		<input type="text" placeholder="Enter Your Address" class="input-2">
+		
+		<div class="clearfix"></div>
+		<button class="conti-3" disabled="true">Continue &nbsp;<i class="fa fa-angle-right"></i></button>
+	</div>
+
+</div>
+
+<div class="form-4">
+	<div class="container">
+		<h1>Congratulations! You have Successfully Submitted<br/>
+		Your application or profile.</h1>
+		
+	</div>
+
+</div>
+
+<div class="progress-bar">
+	<div class="container">
+		<div class="step-1">
+			<i class="fa fa-user-o bot-icon-1"></i>
+			<div class="line-1"></div>
+		</div>
+		<div class="step-1">
+			<i class="fa fa-language bot-icon-2"></i>
+			<div class="line-2"></div>
+		</div>
+		<div class="step-1">
+			<i class="fa fa-globe bot-icon-3"></i>
+			<div class="line-3"></div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+$(document).ready(function(){
+
+	    $('.input-1').keyup(function(){
+	        if ($(this).val() == '') {
+	            $(this).addClass("error");
+	        } else{
+	            $(this).removeClass("error");
+	            $('.conti-1').css('opacity','1');
+	            $('.conti-1').css('cursor','pointer');
+	            $('.conti-1').prop('disabled', false);
+	        }
+	    });
+
+	    $('.input-2').keyup(function(){
+	        if ($(this).val() == '') {
+	            $(this).addClass("error");
+	        } else{
+	            $(this).removeClass("error");
+	            $('.conti-3').css('opacity','1');
+	            $('.conti-3').css('cursor','pointer');
+	            $('.conti-3').prop('disabled', false);
+	        }
+	    });
+
+	    $(".check").click(function(){
+	    	if($(this).prop("checked") == true){
+	    		$('.conti-2').css('opacity','1');
+	    		$('.conti-2').css('cursor','pointer');
+	            $('.conti-2').prop('disabled', false);
+	    	}
+	    	else if($(this).prop("checked") == false){
+	    		$('.conti-2').css('opacity','0.3');
+	    		$('.conti-2').css('cursor','not-allowed');
+	            $('.conti-2').prop('disabled', true);
+	    	}
+	    });
+
+  
+});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	 $('.conti-1').click(function(){
+	    	$('.form-1').css('display','none');
+	    	$('.form-2').css('display','block');
+	    	$('.bot-icon-1').css('color','#0254b7');
+	    	$('.line-1').css('background-color','#0254b7');
+	    });
+	 $('.conti-2').click(function(){
+	    	$('.form-2').css('display','none');
+	    	$('.form-3').css('display','block');
+	    	$('.bot-icon-2').css('color','#0254b7');
+	    	$('.line-2').css('background-color','#0254b7');
+	    });
+
+	 $('.conti-3').click(function(){
+	    	$('.form-3').css('display','none');
+	    	$('.form-4').css('display','block');
+	    	$('.bot-icon-3').css('color','#0254b7');
+	    	$('.line-3').css('background-color','#0254b7');
+	    });
+
+	});
+</script>
+
+
+
+
+
+</body>
+</html>

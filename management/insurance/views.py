@@ -293,7 +293,18 @@ def employeesinfoV(request):
     currentbranch = BranchInformationM.objects.raw('select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',[request.user.id])
     company = BranchInformationM.objects.filter(Branch_Code=1)
     ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
-    return render(request,'hr/forms/employeesinfo.html',{'ubranch':ubranch,'company':company,'currentbranch':currentbranch})
+    employees=EmployeesinfoM.objects.all()
+    employeesid=EmployeesinfoM.objects.all().count()
+    number=employeesid +1
+
+    return render(request,'hr/forms/employeesinfo.html',{'ubranch':ubranch,'company':company,'currentbranch':currentbranch,
+                                                         'employees':employees,'number':number})
+
+def employeesinfoselectV(request):
+    produ = request.GET.get('bname')
+    if produ:
+       employees = EmployeesinfoM.objects.filter(id=produ)
+    return JsonResponse({'employees':list(employees.values())})
 
 
 def branchinfoPDFV(request):
@@ -796,6 +807,79 @@ def voyagePDFV(request):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+def currencyV(request):
+    Curre = Currency.objects.all()
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    return render(request,'admin/forms/Currency.html',{'Curre':Curre,'currentbranch':currentbranch,'company':company,'ubranch':ubranch})
+
+def currencysaveV(request):
+    if request.method == 'POST':
+        current = request.POST.get('currencys')
+
+        data = Currency.objects.create(name=current)
+        messages.info(request, 'Data Save')
+    else:
+        messages.info(request, 'Data Do Not Saved')
+    return redirect('/currency/')
+
+def currencyeditV (request,id=0):
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    if id != 0:
+        data = Currency.objects.get(id=id)
+    return render(request, 'admin/forms/currencyedit.html',
+                  {'currentbranch': currentbranch, 'company': company, 'ubranch': ubranch,'data':data})
+
+def currencyupdateV(request,id=0):
+    voya=request.POST.get('currency')
+    if id !=0:
+        data = Currency.objects.get(id=id)
+        data.name=voya
+        data.save()
+        messages.info(request, 'Data Update')
+    return redirect('/currency/')
+
+def currencydeleteV(request,id=0):
+    if id !=0:
+        data = Currency.objects.get(id=id)
+        data.delete()
+        messages.info(request, 'data Deleted')
+    return redirect('/currency/')
+
+
+def currencyPDFV(request):
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    voya=Currency.objects.all()
+    template_path = 'admin/report/currencyPDF.html'
+    context = {'company':company,'voya':voya}
+    response = HttpResponse(content_type='application/pdf')
+    # for downlode
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+
+
+
+
 def qmarineV(request):
     currentbranch = BranchInformationM.objects.raw(
         'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
@@ -811,10 +895,11 @@ def qmarineV(request):
         voya=VoyageVia.objects.all()
         dases=datetime.datetime.now()
         dases=datetime.datetime.strftime(dases,'%Y-%m-%d')
+        currencys=Currency.objects.all()
 
     return render(request, 'underwritting/forms/marine.html',
                   {'currentbranch': currentbranch, 'company': company,'ubranch': ubranch,
-                    'Client': Client, 'Bank': Bank,'address':address,'transit':transit,'voya':voya,'dases':dases})
+                    'Client': Client, 'Bank': Bank,'address':address,'transit':transit,'voya':voya,'dases':dases,'currencys':currencys})
 
 def qmarineselectclientV(request):
     cname = request.GET.get('cnames')
@@ -836,7 +921,7 @@ def qmarinedateV(request):
     fdates = request.GET.get('fdates')
     datess=datetime.datetime.strptime(fdates,'%Y-%m-%d')
     delta = (datess + datetime.timedelta(days=364)).date()
-    # return render(request,'selectlist/dates.html',{'delta':delta})
+
     data={
         'taken':delta
     }
