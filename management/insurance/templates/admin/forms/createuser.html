@@ -120,7 +120,7 @@
 <script>
 $(document).ready(function(){
 $("#add").click(function(){
-    $(".dsc").clone().appendTo(".dsc");
+    $(".dsc:last").clone().appendTo(".dsc");
 
   });
   $("#less").click(function(){

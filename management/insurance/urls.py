@@ -75,6 +75,12 @@ urlpatterns = [
     # -----------------------------------Employees Info--------------------
     path('employees/info/', views.employeesinfoV, name="employeesinfo"),
     path('employees/info/select', views.employeesinfoselectV, name="employeesinfoselect"),
+    path('employees/data/save', views.employeesinfosaveV, name="employeesinfosave"),
+    path('employees/data/select2', views.employeesselectV, name="employeesselect"),
+    path('employees/calculation/', views.calculationV, name="calculation"),
+
+
+
     # -----------------------------------Under Writting --------------------
     path('uw/dashboard/', views.uwdashboardV, name="uwdashboard"),
     path('uw/quotation/dashboard/', views.quwdashboardV, name="quwdashboard"),

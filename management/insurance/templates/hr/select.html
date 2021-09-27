@@ -1,0 +1,30 @@
+{%for x in ab%}
+<div class="row" style="border:2px solid gray;">
+                        <h1>Education information</h1>
+                        <div class="col-md-6">
+                            <label>Exam Name</label>
+                            <p><input placeholder="Exam Name" oninput="this.className = ''" name="Ename" value="{{x.Exam_Name}}"
+                                      class="Ename"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>University Name</label>
+                            <p><input placeholder="Uname" oninput="this.className = ''" name="Uname" value="{{x.Institute}}"
+                                      id="Uname"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Education Board</label>
+                            <p><input placeholder="Education Board" oninput="this.className = ''" name="Eboard" value="{{x.Board}}"
+                                      id="Eboard"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Passing year</label>
+                            <p><input placeholder="Passing year" oninput="this.className = ''" name="Pyear" value="{{x.Pass_Year}}"
+                                      id="pYear"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>CGPA</label>
+                            <p><input placeholder="CGPA" oninput="this.className = ''" name="cgpa" value="{{x.Gpa}}"
+                                      id="cgpa"></p>
+                        </div>
+                    </div>
+{%endfor%}

@@ -295,16 +295,108 @@ def employeesinfoV(request):
     ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
     employees=EmployeesinfoM.objects.all()
     employeesid=EmployeesinfoM.objects.all().count()
+    branch=BranchInformationM.objects.all()
     number=employeesid +1
 
     return render(request,'hr/forms/employeesinfo.html',{'ubranch':ubranch,'company':company,'currentbranch':currentbranch,
-                                                         'employees':employees,'number':number})
+                                                         'employees':employees,'number':number,'branch':branch})
 
 def employeesinfoselectV(request):
     produ = request.GET.get('bname')
     if produ:
-       employees = EmployeesinfoM.objects.filter(id=produ)
+        employees=EmployeesinfoM.objects.filter(id=produ)
+
     return JsonResponse({'employees':list(employees.values())})
+
+def employeesselectV(request):
+    produ = request.GET.get('bname')
+    ab = EmployeesEducation.objects.filter(Ename_id=produ)
+    return render(request,'hr/select.html',{'ab':ab})
+
+def calculationV(request):
+    grosssal = request.GET.get('salg')
+    gross=int(grosssal)
+    basic=(gross*50)/100
+    house=(basic*50)/100
+    medical=(basic*20)/100
+    housement=(basic*10)/100
+    convence=(basic*10)/100
+    entertaint=(basic*10)/100
+    data={
+        'basic':basic,
+        'house':house,
+        'medical':medical,
+        'houseme':housement,
+        'convance':convence,
+        'entertaint':entertaint,
+    }
+    return JsonResponse({'data':data})
+
+def employeesinfosaveV(request):
+    if request.method=='POST':
+        name=request.POST.get('lname')
+        branch=request.POST.get('Branch')
+        br=BranchInformationM.objects.get(id=branch)
+        department=request.POST.get('department')
+        designation=request.POST.get('designation')
+        father_Name=request.POST.get('father_Name')
+        mother_Name=request.POST.get('mother_Name')
+        married=request.POST.get('Married')
+        present_Address=request.POST.get('present_Address')
+        permanant_Address=request.POST.get('permanant_Address')
+        spouse_Name=request.POST.get('spouse_Name')
+        sex=request.POST.get('sex')
+        nid=request.POST.get('nid')
+        birth_Date=request.POST.get('birth_Date')
+        bdate=datetime.datetime.strptime(birth_Date,'%Y-%m-%d')
+        phone=request.POST.get('phone')
+        email=request.POST.get('email')
+        joining_Date=request.POST.get('joining_Date')
+        jdate=datetime.datetime.strptime(joining_Date,'%Y-%m-%d')
+        Cconfirmation_dates=request.POST.get('Cconfirmation_dates')
+        cdate = datetime.datetime.strptime(Cconfirmation_dates, '%Y-%m-%d')
+        probationary_Period=request.POST.get('probationary_Period')
+        status=request.POST.get('status')
+        type=request.POST.get('type')
+        Emp_Type=request.POST.get('emp_Type')
+        ename=request.POST.getlist('Ename')
+        uname=request.POST.getlist('Uname')
+        eboard=request.POST.getlist('Eboard')
+        pyear=request.POST.getlist('Pyear')
+        cgpa=request.POST.getlist('cgpa')
+        effect_Datea=request.POST.getlist('effect_Date')
+
+        basic=request.POST.getlist('basic')
+        house=request.POST.getlist('house_Rent')
+        hospital=request.POST.getlist('hospital_Allowance')
+        houseaa=request.POST.getlist('house_Maintenance')
+        entertainment=request.POST.getlist('entertainment_Allowance')
+        Conveyance=request.POST.getlist('conveyance_Allowance')
+        others=request.POST.getlist('other')
+        grossss=request.POST.getlist('gross')
+        income=request.POST.getlist('income_Tax')
+
+        data1=EmployeesinfoM(Name=name,Branch=br,Department=department,Designation=designation,
+                                            Father_Name=father_Name,Mother_Name=mother_Name,Married=married,Spouse_Name=spouse_Name,
+                                            Sex=sex,Birth_Date=bdate,Nid=nid,Joining_Date=jdate,
+                                            Present_Address=present_Address,Permanant_Address=permanant_Address,Phone=phone,Email=email,
+                                            Probationary_Period=probationary_Period,Confirmation_dates=cdate,Status=status,Type=type,Emp_Type=Emp_Type)
+        data1.save()
+        c = min([len(ename),len(uname),len(eboard),len(pyear),len(cgpa)])
+        for i in range(c):
+            education = EmployeesinfoM.objects.get(Name=name)
+            data = EmployeesEducation(Ename=education, Exam_Name=ename[i],Institute=uname[i],Board=eboard[i],Pass_Year=pyear[i],Gpa=cgpa[i])
+            data.save()
+
+        ds = min([len(basic),len(house),len(hospital),len(houseaa),len(entertainment),len(Conveyance),len(others),len(grossss),len(income),len(effect_Datea)])
+        for i in range(ds):
+            eff = datetime.datetime.strptime(effect_Datea[i], '%Y-%m-%d')
+            educations = EmployeesinfoM.objects.get(Name=name)
+            dataemps = EmployeesSalary(Ename=educations,Effect_Date=eff,Basic=int(basic[i]),House_Rent=int(house[i]),House_Maintenance=int(houseaa[i]),Hospital_Allowance=int(hospital[i]),Conveyance_Allowance=int(Conveyance[i]),Entertainment_Allowance=int(entertainment[i]),Other=int(others[i]),Gross=int(grossss[i]),Income_Tax=int(income[i]))
+            dataemps.save()
+
+        messages.info(request, 'Data Saved')
+    return redirect('/employees/info/')
 
 
 def branchinfoPDFV(request):
