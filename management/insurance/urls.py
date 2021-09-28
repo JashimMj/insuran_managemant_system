@@ -78,6 +78,20 @@ urlpatterns = [
     path('employees/data/save', views.employeesinfosaveV, name="employeesinfosave"),
     path('employees/data/select2', views.employeesselectV, name="employeesselect"),
     path('employees/calculation/', views.calculationV, name="calculation"),
+    #------------------------------Department---------------------------------
+    path('Department/info',views.DepartmentV,name='department'),
+    path('Department/info/save/',views.DepartmentsaveV,name='departmentsaved'),
+    path('Department/info/Edit/<int:id>',views.DepartmenteditV,name='departmentedit'),
+    path('Department/info/Update/<int:id>',views.DepartmentUpdateV,name='departmentupdate'),
+    path('Department/info/delete/<int:id>',views.DepartmentDeleteV,name='departmentdelete'),
+    path('Department/info/PDF/',views.DepertmentPDFV,name='departmentPDF'),
+    #------------------------------Designation---------------------------------
+    path('Designation/info',views.DesignationV,name='designation'),
+    path('Designation/info/save/',views.DesignationsaveV,name='designationsaved'),
+    path('Designation/info/Edit/<int:id>',views.DesignationeditV,name='designationedit'),
+    path('Designation/info/Update/<int:id>',views.DesignationUpdateV,name='designationupdate'),
+    path('Designation/info/delete/<int:id>',views.DesignationDeleteV,name='designationdelete'),
+    path('Designation/info/PDF/',views.DesignationPDFV,name='designationPDF'),
 
 
 

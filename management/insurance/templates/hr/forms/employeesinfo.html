@@ -92,6 +92,7 @@ button:hover {
 
 
 
+
 </style>
 <section class="content-header">
     <h1>
@@ -110,7 +111,7 @@ button:hover {
 
 
         <form id="regForm" action="{%url 'employeesinfosave'%}" method="POST" enctype="multipart/form-data">
-           {%csrf_token%}
+            {%csrf_token%}
             <!-- One "tab" for each step in the form: -->
             <div class="tab">
                 <div class="row">
@@ -136,7 +137,7 @@ button:hover {
                         <label>Name</label>
                         <p><input placeholder="Name" oninput="this.className = ''" name="lname" id="lname"></p>
                     </div>
-                     <div class="col-md-6">
+                    <div class="col-md-6">
                         <label>Branch Name</label>
 
                         <p><select class="form-control custom-select mr-sm-2 selectpicker" data-show-subtext="true"
@@ -149,13 +150,24 @@ button:hover {
                     </div>
                     <div class="col-md-6">
                         <label>Department</label>
-                        <p><input placeholder="Department" oninput="this.className = ''" name="department"
-                                  id="department"></p>
+                        <p><select class="form-control custom-select mr-sm-2" name="department" id="department"
+                                   required>
+                            <option selected>Select List</option>
+                            {%for x in dept%}
+                            <option value="{{x.id}}">{{x.Name}}</option>
+                           {%endfor%}
+
+                        </select></p>
                     </div>
                     <div class="col-md-6">
                         <label>Designation</label>
-                        <p><input placeholder="Designation" oninput="this.className = ''" name="designation"
-                                  id="designation"></p>
+                         <p><select class="form-control custom-select mr-sm-2" name="designation" id="designation"
+                                   required>
+                            <option selected>Select List</option>
+                            {%for x in designa%}
+                            <option value="{{x.id}}">{{x.Name}}</option>
+                             {%endfor%}
+                         </select></p>
                     </div>
                     <div class="col-md-6">
                         <label>Father Name</label>
@@ -285,36 +297,36 @@ button:hover {
                 <button id="less" type="button">-</button>
                 <div class="edu">
                     <ul id="abd" style="padding:0px;margin:0px;">
-                <div class="row" style="border:2px solid gray;">
-                        <h1>Education information</h1>
-                        <div class="col-md-6">
-                            <label>Exam Name</label>
-                            <p><input placeholder="Exam Name" oninput="this.className = ''" name="Ename"
-                                      class="Ename"></p>
+                        <div class="row" style="border:2px solid gray;">
+                            <h1>Education information</h1>
+                            <div class="col-md-6">
+                                <label>Exam Name</label>
+                                <p><input placeholder="Exam Name" oninput="this.className = ''" name="Ename"
+                                          class="Ename"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>University Name</label>
+                                <p><input placeholder="Uname" oninput="this.className = ''" name="Uname"
+                                          id="Uname"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Education Board</label>
+                                <p><input placeholder="Education Board" oninput="this.className = ''" name="Eboard"
+                                          id="Eboard"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Passing year</label>
+                                <p><input placeholder="Passing year" oninput="this.className = ''" name="Pyear"
+                                          id="pYear"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>CGPA</label>
+                                <p><input placeholder="CGPA" oninput="this.className = ''" name="cgpa"
+                                          id="cgpa"></p>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label>University Name</label>
-                            <p><input placeholder="Uname" oninput="this.className = ''" name="Uname"
-                                      id="Uname"></p>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Education Board</label>
-                            <p><input placeholder="Education Board" oninput="this.className = ''" name="Eboard"
-                                      id="Eboard"></p>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Passing year</label>
-                            <p><input placeholder="Passing year" oninput="this.className = ''" name="Pyear"
-                                      id="pYear"></p>
-                        </div>
-                        <div class="col-md-6">
-                            <label>CGPA</label>
-                            <p><input placeholder="CGPA" oninput="this.className = ''" name="cgpa"
-                                      id="cgpa"></p>
-                        </div>
-                    </div>
-                        </ul>
-                    </div>
+                    </ul>
+                </div>
 
 
             </div>
@@ -323,63 +335,68 @@ button:hover {
                 <button id="lesss" type="button">-</button>
                 <div class="edus">
                     <ul id="abde" style="padding:0px;margin:0px;">
-                <h1>Employees Salary Information</h1>
-                <div class="row" style="border:2px solid gray;">
-                    <div class="col-md-6">
-                        <label>Effect Date</label>
-                        <p><input placeholder="Effect Date" oninput="this.className = ''" name="effect_Date"
-                                  id="Effect_Date" type="date"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Basic</label>
-                        <p><input placeholder="Basic" oninput="this.className = ''" name="basic" value="0"
-                                  id="Basic"></p>
-                    </div>
-                    <div class="col-md-12">
-                        <label>House Rent</label>
-                        <p><input placeholder="House Rent" oninput="this.className = ''" name="house_Rent" value="0"
-                                  id="House_Rent"></p>
-                    </div>
+                        <h1>Employees Salary Information</h1>
+                        <div class="row" style="border:2px solid gray;">
+                            <div class="col-md-6">
+                                <label>Effect Date</label>
+                                <p><input placeholder="Effect Date" oninput="this.className = ''" name="effect_Date"
+                                          id="Effect_Date" type="date"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Basic</label>
+                                <p><input placeholder="Basic" oninput="this.className = ''" name="basic" value="0"
+                                          id="Basic"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label>House Rent</label>
+                                <p><input placeholder="House Rent" oninput="this.className = ''" name="house_Rent"
+                                          value="0"
+                                          id="House_Rent"></p>
+                            </div>
 
-                    <div class="col-md-6">
-                        <label>Hospital Allowance</label>
-                        <p><input placeholder="Hospital Allowance" oninput="this.className = ''" value="0"
-                                  name="hospital_Allowance"
-                                  id="Hospital_Allowance"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>House Maintenance</label>
-                        <p><input placeholder="House Maintenance" oninput="this.className = ''" name="house_Maintenance" value="0"
-                                  id="House_Maintenance"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Entertainment_Allowance</label>
-                        <p><input placeholder="Entertainment_Allowance" oninput="this.className = ''" value="0"
-                                  name="entertainment_Allowance"
-                                  id="Entertainment_Allowance"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Conveyance Allowance</label>
-                        <p><input placeholder="Conveyance Allowance" oninput="this.className = ''" value="0"
-                                  name="conveyance_Allowance"
-                                  id="Conveyance_Allowance"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Other Allowance</label>
-                        <p><input placeholder="Other Allowance" oninput="this.className = ''" name="other" value="0"
-                                  id="Other"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Gross Salary</label>
-                        <p><input placeholder="Gross Salary " oninput="this.className = ''" name="gross" value="0"
-                                  id="Gross"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Income Tax</label>
-                        <p><input placeholder="Income Tax " oninput="this.className = ''" name="income_Tax" value="0"
-                                  id="Income_Tax"></p>
-                    </div>
-                </div>
+                            <div class="col-md-6">
+                                <label>Hospital Allowance</label>
+                                <p><input placeholder="Hospital Allowance" oninput="this.className = ''" value="0"
+                                          name="hospital_Allowance"
+                                          id="Hospital_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>House Maintenance</label>
+                                <p><input placeholder="House Maintenance" oninput="this.className = ''"
+                                          name="house_Maintenance" value="0"
+                                          id="House_Maintenance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Entertainment_Allowance</label>
+                                <p><input placeholder="Entertainment_Allowance" oninput="this.className = ''" value="0"
+                                          name="entertainment_Allowance"
+                                          id="Entertainment_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Conveyance Allowance</label>
+                                <p><input placeholder="Conveyance Allowance" oninput="this.className = ''" value="0"
+                                          name="conveyance_Allowance"
+                                          id="Conveyance_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Other Allowance</label>
+                                <p><input placeholder="Other Allowance" oninput="this.className = ''" name="other"
+                                          value="0"
+                                          id="Other"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Gross Salary</label>
+                                <p><input placeholder="Gross Salary " oninput="this.className = ''" name="gross"
+                                          value="0"
+                                          id="Gross"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Income Tax</label>
+                                <p><input placeholder="Income Tax " oninput="this.className = ''" name="income_Tax"
+                                          value="0"
+                                          id="Income_Tax"></p>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -396,8 +413,8 @@ button:hover {
                 <span class="step"></span>
                 <span class="step"></span>
                 <span class="step"></span>
-                <span class="step"></span>
-                <span class="step"></span>
+                <!--                <span class="step"></span>-->
+                <!--                <span class="step"></span>-->
             </div>
 
         </form>
@@ -475,6 +492,7 @@ function fixStepIndicator(n) {
   //... and adds the "active" class on the current step:
   x[n].className += " active";
 }
+
 
 
 
@@ -581,6 +599,7 @@ $.ajax({
 
 
 
+
 </script>
 
 <script>
@@ -600,6 +619,7 @@ $("#sums").click(function(){
     $('.edus').closest('.edus').last().remove();
 
   });
+
 
 
 </script>

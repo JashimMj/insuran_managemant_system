@@ -296,10 +296,13 @@ def employeesinfoV(request):
     employees=EmployeesinfoM.objects.all()
     employeesid=EmployeesinfoM.objects.all().count()
     branch=BranchInformationM.objects.all()
+    dept=Department.objects.all()
+    designa=Designation.objects.all()
     number=employeesid +1
 
     return render(request,'hr/forms/employeesinfo.html',{'ubranch':ubranch,'company':company,'currentbranch':currentbranch,
-                                                         'employees':employees,'number':number,'branch':branch})
+                                                         'employees':employees,'number':number,'branch':branch,'dept':dept,
+                                                         'designa':designa})
 
 def employeesinfoselectV(request):
     produ = request.GET.get('bname')
@@ -1019,6 +1022,149 @@ def qmarinedateV(request):
     }
 
     return JsonResponse({"data":data})
+
+
+def DepartmentV(request):
+    Dept=Department.objects.all()
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    return render(request,'admin/forms/Department.html',{'currentbranch': currentbranch, 'company': company, 'ubranch': ubranch,'Dept':Dept})
+
+
+def DepartmentsaveV(request):
+    if request.method == 'POST':
+        depts = request.POST.get('department')
+
+        data=Department(Name=depts)
+        data.save()
+        messages.info(request, 'Data Saved')
+    return redirect('/Department/info')
+
+def DepartmenteditV(request,id=0):
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    if id != 0:
+        data = Department.objects.get(id=id)
+    return render(request, 'admin/forms/Depeartmentedit.html',
+                  {'currentbranch': currentbranch, 'company': company, 'ubranch': ubranch, 'data': data})
+
+
+def DepartmentUpdateV(request,id=0):
+    dept=request.POST.get('department')
+    if id !=0:
+        data = Department.objects.get(id=id)
+        data.Name=dept
+        data.save()
+        messages.info(request, 'Data Update')
+    return redirect('/Department/info')
+
+
+def DepartmentDeleteV(request,id=0):
+    if id !=0:
+        data = Department.objects.get(id=id)
+        data.delete()
+        messages.info(request, 'Data Deleted')
+    return redirect('/Department/info')
+
+
+def DepertmentPDFV(request):
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    voya=Department.objects.all()
+    template_path = 'admin/report/depertmentPDF.html'
+    context = {'company':company,'voya':voya}
+    response = HttpResponse(content_type='application/pdf')
+    # for downlode
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+def DesignationV(request):
+    Designat = Designation.objects.all()
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    return render(request, 'admin/forms/designation.html',
+                  {'currentbranch': currentbranch, 'company': company, 'ubranch': ubranch, 'Designat': Designat})
+
+
+
+def DesignationsaveV(request):
+    if request.method == 'POST':
+        depts = request.POST.get('designation')
+
+        data=Designation(Name=depts)
+        data.save()
+        messages.info(request, 'Data Saved')
+    return redirect('/Designation/info')
+
+def DesignationeditV(request,id=0):
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    if id != 0:
+        data = Designation.objects.get(id=id)
+    return render(request, 'admin/forms/Designationedit.html',
+                  {'currentbranch': currentbranch, 'company': company, 'ubranch': ubranch, 'data': data})
+
+
+def DesignationUpdateV(request,id=0):
+    dept=request.POST.get('designation')
+    if id !=0:
+        data = Designation.objects.get(id=id)
+        data.Name=dept
+        data.save()
+        messages.info(request, 'Data Update')
+    return redirect('/Designation/info')
+
+
+def DesignationDeleteV(request,id=0):
+    if id !=0:
+        data = Designation.objects.get(id=id)
+        data.delete()
+        messages.info(request, 'Data Deleted')
+    return redirect('/Designation/info')
+
+def DesignationPDFV(request):
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    voya=Designation.objects.all()
+    template_path = 'admin/report/designationPDF.html'
+    context = {'company':company,'voya':voya}
+    response = HttpResponse(content_type='application/pdf')
+    # for downlode
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 
