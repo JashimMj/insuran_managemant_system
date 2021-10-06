@@ -2,8 +2,10 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.views.static import serve
 urlpatterns = [
+    path('media/', serve,{'document_root': settings.MEDIA_ROOT}),
+    path('static', serve,{'document_root': settings.STATIC_ROOT}),
     path('', views.mainV,name="main"),
     path('', views.indexV, name="index"),
     path('branch/select/', views.branchselectV, name="branchselect"),
@@ -104,6 +106,7 @@ urlpatterns = [
     path('uw/quotation/marine/select/bank/add/', views.qmarineselectbankaddV, name="qmarineselectbankadd"),
     path('uw/quotation/marine/enddate/', views.qmarinedateV, name="qmarinesendate"),
 
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

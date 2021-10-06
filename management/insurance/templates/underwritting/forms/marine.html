@@ -94,7 +94,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="bname">Bank Name</label>
-                                        <select class="form-control custom-select mr-sm-2" id="bname" name="cname"
+                                        <select class="form-control custom-select mr-sm-2 selectpicker"   data-show-subtext="true" data-live-search="true" id="bname" name="bname"
                                                 required>
                                             <option selected>Select List</option>
                                             {%for x in Bank%}
@@ -243,15 +243,16 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group" id="produce">
-                                        <label for="tdate">Currency</label>
-                                        <select class="form-control custom-select mr-sm-2" name="produce" required>
+                                        <label for="tdate">Producer</label>
+                                        <select class="form-control custom-select mr-sm-2 selectpicker"   data-show-subtext="true" data-live-search="true" name="produce" required>
                                             <option selected>Select List</option>
-                                            {%for x in currencys%}
-                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%for x in producer%}
+                                            <option value="{{x.id}}">ID:{{x.id}}  Name:{{x.Name}} </option>
                                             {%endfor%}
                                         </select>
                                     </div>
                                 </div>
+
 
 
                             </div>
@@ -283,7 +284,7 @@ $.ajax({
     'cnames':cnames
     },
     success:function(response){
-    alert("Some Right");
+
     console.log(response.caddress[0].id);
     $('#select2').empty();
         for (var key in response.caddress)
@@ -309,8 +310,7 @@ $.ajax({
     'abc' : abc
     },
     success:function(response){
-    alert("Some Right");
-    console.log(response.ranch[0].id);
+
     $('#bbranch').empty();
         for (var key in response.ranch)
         {
@@ -374,8 +374,7 @@ $.ajax({
     'baddress' : baddress
     },
     success:function(response){
-    alert("Some Right");
-    console.log(response.baddress[0].id);
+
     $('#baddress').empty();
         for (var key in response.baddress)
         {

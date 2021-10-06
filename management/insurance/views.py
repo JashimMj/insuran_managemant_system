@@ -984,17 +984,19 @@ def qmarineV(request):
     for x in currentbranch:
         dbrance = BranchInformationM.objects.get(id=x.id)
         Client = ClientInformation.objects.filter(branch=dbrance)
-        Bank = Bankinformation.objects.filter(branch=dbrance)
+        Bank = Bankinformation.objects.all()
         address=ClentAddressInformation.objects.all()
         transit=TransitBy.objects.all()
         voya=VoyageVia.objects.all()
         dases=datetime.datetime.now()
         dases=datetime.datetime.strftime(dases,'%Y-%m-%d')
         currencys=Currency.objects.all()
+        producer=EmployeesinfoM.objects.all()
 
     return render(request, 'underwritting/forms/marine.html',
                   {'currentbranch': currentbranch, 'company': company,'ubranch': ubranch,
-                    'Client': Client, 'Bank': Bank,'address':address,'transit':transit,'voya':voya,'dases':dases,'currencys':currencys})
+                    'Client': Client, 'Bank': Bank,'address':address,'transit':transit,
+                   'voya':voya,'dases':dases,'currencys':currencys,'producer':producer})
 
 def qmarineselectclientV(request):
     cname = request.GET.get('cnames')
