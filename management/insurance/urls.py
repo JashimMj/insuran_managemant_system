@@ -79,6 +79,7 @@ urlpatterns = [
     path('employees/info/select', views.employeesinfoselectV, name="employeesinfoselect"),
     path('employees/data/save', views.employeesinfosaveV, name="employeesinfosave"),
     path('employees/data/select2', views.employeesselectV, name="employeesselect"),
+    path('employees/data/select3', views.employeessalaryV, name="employeessalary"),
     path('employees/calculation/', views.calculationV, name="calculation"),
     #------------------------------Department---------------------------------
     path('Department/info',views.DepartmentV,name='department'),
@@ -105,6 +106,10 @@ urlpatterns = [
     path('uw/quotation/marine/select/bank/', views.qmarineselectbankV, name="qmarineselectbank"),
     path('uw/quotation/marine/select/bank/add/', views.qmarineselectbankaddV, name="qmarineselectbankadd"),
     path('uw/quotation/marine/enddate/', views.qmarinedateV, name="qmarinesendate"),
+
+
+    #---------------------------TEST_______________________________
+    path('test/', views.testV, name="test"),
 
 ]
 if settings.DEBUG:

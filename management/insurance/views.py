@@ -308,23 +308,39 @@ def employeesinfoselectV(request):
     produ = request.GET.get('bname')
     if produ:
         employees=EmployeesinfoM.objects.filter(id=produ)
+        for x in employees:
+            brs=BranchInformationM.objects.filter(id=x.Branch.id)
+            sal=EmployeesSalary.objects.filter(Ename=x.id)
 
-    return JsonResponse({'employees':list(employees.values())})
+
+
+    return JsonResponse({'employees':list(employees.values()),'brs':list(brs.values()),'sal':list(sal.values())})
 
 def employeesselectV(request):
     produ = request.GET.get('bname')
     ab = EmployeesEducation.objects.filter(Ename_id=produ)
     return render(request,'hr/select.html',{'ab':ab})
+def employeessalaryV(request):
+    produ = request.GET.get('bname')
+    ab = EmployeesSalary.objects.filter(Ename_id=produ)
+    return render(request,'hr/salaryselet.html',{'ab':ab})
 
 def calculationV(request):
     grosssal = request.GET.get('salg')
-    gross=int(grosssal)
+    others = request.GET.get('oth')
+    taxable = request.GET.get('tax')
+    gross = int(grosssal)
+
     basic=(gross*50)/100
     house=(basic*50)/100
     medical=(basic*20)/100
     housement=(basic*10)/100
     convence=(basic*10)/100
     entertaint=(basic*10)/100
+    ggros = int(grosssal) + int(others) + int(taxable)
+
+
+
     data={
         'basic':basic,
         'house':house,
@@ -332,6 +348,7 @@ def calculationV(request):
         'houseme':housement,
         'convance':convence,
         'entertaint':entertaint,
+        'ggros':ggros,
     }
     return JsonResponse({'data':data})
 
@@ -400,6 +417,17 @@ def employeesinfosaveV(request):
 
         messages.info(request, 'Data Saved')
     return redirect('/employees/info/')
+
+def branchinfoeditV(request,id=0):
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    companys = BranchInformationM.objects.all()
+    if id != 0:
+        companyedit = BranchInformationM.objects.filter(pk=id)
+    return render(request,'admin/forms/branchinfoedit.html',{'company':company,'companyedit':companyedit,'companys':companys,'ubranch':ubranch,'currentbranch':currentbranch})
 
 
 def branchinfoPDFV(request):
@@ -1168,6 +1196,10 @@ def DesignationPDFV(request):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+
+def testV(request):
+    return render(request,'test.html')
 
 
 

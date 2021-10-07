@@ -1,0 +1,68 @@
+  {%for x in ab%}
+<div class="row" style="border:2px solid gray;">
+                        <h1>Employees Salary Information</h1>
+                        <div class="row" style="border:2px solid gray;">
+                            <div class="col-md-6">
+                                <label>Effect Date</label>
+                                <p><input placeholder="Effect Date" oninput="this.className = ''" name="effect_Date"
+                                          id="effect_Date" type="date" value='{{x.Effect_Date|date:"Y-m-d"}}'></p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Basic</label>
+                                <p><input placeholder="Basic" oninput="this.className = ''" name="basic" value="{{x.Basic}}"
+                                          id="basic"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label>House Rent</label>
+                                <p><input placeholder="House Rent" oninput="this.className = ''" name="house_Rent"
+                                          value="{{x.House_Rent}}"
+                                          id="House_Rent"></p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Hospital Allowance</label>
+                                <p><input placeholder="Hospital Allowance" oninput="this.className = ''" value="{{x.Hospital_Allowance}}"
+                                          name="hospital_Allowance"
+                                          id="Hospital_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>House Maintenance</label>
+                                <p><input placeholder="House Maintenance" oninput="this.className = ''"
+                                          name="house_Maintenance" value="{{x.House_Maintenance}}"
+                                          id="House_Maintenance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Entertainment_Allowance</label>
+                                <p><input placeholder="Entertainment_Allowance" oninput="this.className = ''" value="{{x.Entertainment_Allowance}}"
+                                          name="entertainment_Allowance"
+                                          id="Entertainment_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Conveyance Allowance</label>
+                                <p><input placeholder="Conveyance Allowance" oninput="this.className = ''" value="{{x.Conveyance_Allowance}}"
+                                          name="conveyance_Allowance"
+                                          id="Conveyance_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Other Allowance</label>
+                                <p><input placeholder="Other Allowance" oninput="this.className = ''" name="other"
+                                          value="{{x.Other}}"
+                                          id="Other"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Gross Salary</label>
+                                <p><input placeholder="Gross Salary " oninput="this.className = ''" name="gross"
+                                          value="{{x.Gross}}"
+                                          id="Gross"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Income Tax</label>
+                                <p><input placeholder="Income Tax " oninput="this.className = ''" name="income_Tax"
+                                          value="{{x.Income_Tax}}"
+                                          id="Income_Tax"></p>
+                            </div>
+                        </div>
+
+</div>
+  {%endfor%}

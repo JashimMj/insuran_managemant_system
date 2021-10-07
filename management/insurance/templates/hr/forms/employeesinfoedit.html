@@ -93,8 +93,6 @@ button:hover {
 
 
 
-
-
 </style>
 <section class="content-header">
     <h1>
@@ -142,7 +140,8 @@ button:hover {
                     <div class="col-md-6">
                         <label>Branch Name</label>
 
-                        <p><select class="form-control custom-select mr-sm-2 " name="Branch" id="ssbranch" required>
+                        <p><select class="form-control custom-select mr-sm-2 selectpicker" data-show-subtext="true"
+                                   data-live-search="true" name="Branch" id="sBranch" required>
                             <option selected>Select List</option>
                             {%for x in branch%}
                             <option value="{{x.id}}">{{x.Name}}</option>
@@ -156,19 +155,19 @@ button:hover {
                             <option selected>Select List</option>
                             {%for x in dept%}
                             <option value="{{x.id}}">{{x.Name}}</option>
-                            {%endfor%}
+                           {%endfor%}
 
                         </select></p>
                     </div>
                     <div class="col-md-6">
                         <label>Designation</label>
-                        <p><select class="form-control custom-select mr-sm-2" name="designation" id="designation"
+                         <p><select class="form-control custom-select mr-sm-2" name="designation" id="designation"
                                    required>
                             <option selected>Select List</option>
                             {%for x in designa%}
                             <option value="{{x.id}}">{{x.Name}}</option>
-                            {%endfor%}
-                        </select></p>
+                             {%endfor%}
+                         </select></p>
                     </div>
                     <div class="col-md-6">
                         <label>Father Name</label>
@@ -332,75 +331,73 @@ button:hover {
 
             </div>
             <div class="tab">
-
-                <div id="mainDiv">
-
-                    <div class="one">
+                <button id="sumss" type="button">+</button>
+                <button id="lesss" type="button">-</button>
+                <div class="edus">
+                    <ul id="abde" style="padding:0px;margin:0px;">
+                        <h1>Employees Salary Information</h1>
                         <div class="row" style="border:2px solid gray;">
-                            <div class="input-field col s1" hidden>
-                                <input class="sno" type="text" name="Sr" value="1">
-                                <label for="Sr">Sr</label>
-                            </div>
                             <div class="col-md-6">
                                 <label>Effect Date</label>
-                                <p><input placeholder="Effect Date"  name="effect_Date"
-                                          class="effect_Date" type="date"></p>
+                                <p><input placeholder="Effect Date" oninput="this.className = ''" name="effect_Date"
+                                          id="Effect_Date" type="date"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Basic</label>
-                                <input class="basic" placeholder="Basic" name="basic" value="0">
+                                <p><input placeholder="Basic" oninput="this.className = ''" name="basic" value="0"
+                                          id="Basic"></p>
                             </div>
                             <div class="col-md-12">
                                 <label>House Rent</label>
-                                <p><input placeholder="House Rent"  name="house_Rent" value="0" class="House_Rent"></p>
+                                <p><input placeholder="House Rent" oninput="this.className = ''" name="house_Rent"
+                                          value="0"
+                                          id="House_Rent"></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label>Hospital Allowance</label>
-                                <p><input placeholder="Hospital Allowance" value="0"
+                                <p><input placeholder="Hospital Allowance" oninput="this.className = ''" value="0"
                                           name="hospital_Allowance"
-                                          class="Hospital_Allowance"></p>
+                                          id="Hospital_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>House Maintenance</label>
-                                <p><input placeholder="House Maintenance"
+                                <p><input placeholder="House Maintenance" oninput="this.className = ''"
                                           name="house_Maintenance" value="0"
-                                          class="House_Maintenance"></p>
+                                          id="House_Maintenance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Entertainment_Allowance</label>
-                                <p><input placeholder="Entertainment_Allowance"  value="0"
+                                <p><input placeholder="Entertainment_Allowance" oninput="this.className = ''" value="0"
                                           name="entertainment_Allowance"
-                                          class="Entertainment_Allowance"></p>
+                                          id="Entertainment_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Conveyance Allowance</label>
-                                <p><input placeholder="Conveyance Allowance"  value="0"
+                                <p><input placeholder="Conveyance Allowance" oninput="this.className = ''" value="0"
                                           name="conveyance_Allowance"
-                                          class="Conveyance_Allowance"></p>
+                                          id="Conveyance_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Other Allowance</label>
-                                <p><input placeholder="Other Allowance"  name="other"
+                                <p><input placeholder="Other Allowance" oninput="this.className = ''" name="other"
                                           value="0"
-                                          class="Other"></p>
+                                          id="Other"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Gross Salary</label>
-                                <p><input class="total" placeholder="Gross Salary" name="gross"></p>
+                                <p><input placeholder="Gross Salary " oninput="this.className = ''" name="gross"
+                                          value="0"
+                                          id="Gross"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Income Tax</label>
-                                <p><input placeholder="Income Tax " name="income_Tax"
+                                <p><input placeholder="Income Tax " oninput="this.className = ''" name="income_Tax"
                                           value="0"
-                                          class="Income_Tax"></p>
-                            </div>
-                            <div class="col-md-7">
-                                <button class="add" type="button">+</button>
-                                <button class="delete" type="button">-</button>
+                                          id="Income_Tax"></p>
                             </div>
                         </div>
-                    </div>
+                    </ul>
                 </div>
             </div>
 
@@ -505,8 +502,6 @@ function fixStepIndicator(n) {
 
 
 
-
-
         </script>
 
     </div>
@@ -521,10 +516,9 @@ $.ajax({
     'bname':bname
     },
     success:function(response){
-
         for (var key in response.employees)
         {
-
+        console.log(response)
         $('#idno').val(response.employees[key].id);
         $('#lname').val(response.employees[key].Name);
         $('#department').val(response.employees[key].Department);
@@ -546,11 +540,8 @@ $.ajax({
         $('#Joining_Date').val(response.employees[key].Joining_Date);
         $('#Probationary_Period').val(response.employees[key].Probationary_Period);
         $('#Confirmation_dates').val(response.employees[key].Confirmation_dates);
-        $('#ssbranch').val(response.brs[key].id);
-
 
         }
-
 
     },
     error:function(response){
@@ -581,39 +572,13 @@ $.ajax({
 
 });
 
-$('#branch').change(function(){
- var bname= $(this).val();
-$.ajax({
-    url:"{%url 'employeessalary'%}",
-    data:{
-    'bname':bname
-    },
-    success:function(response){
-    $('#abdes').html(response);
-    },
-    error:function(response){
-    alert("Some Error");
-    },
-
-
-});
-
-});
-
 
 $('#Gross').blur(function(){
- var salg = $('#Gross').val();
- var oth = $('#Other').val();
- var tax = $('#Income_Tax').val();
-
+ var salg= $(this).val();
 $.ajax({
     url:"{%url 'calculation'%}",
     data:{
-    'salg':salg,
-    'tax':tax,
-    'oth':oth,
-
-
+    'salg':salg
     },
     success:function(data){
     $('#Basic').val(data.data.basic);
@@ -622,7 +587,6 @@ $.ajax({
     $('#Entertainment_Allowance').val(data.data.entertaint);
     $('#Conveyance_Allowance').val(data.data.convance);
     $('#House_Maintenance').val(data.data.houseme);
-    $('#Gross').val(ggros);
     },
     error:function(response){
     alert("Some Error");
@@ -632,8 +596,6 @@ $.ajax({
 });
 
 });
-
-
 
 
 
@@ -649,72 +611,17 @@ $("#sums").click(function(){
     $('.edu').closest('.edu').last().remove();
 
   });
+  $("#sumss").click(function(){
+    $('.edus:last').clone().appendTo("#abde");
+
+  });
+  $("#lesss").click(function(){
+    $('.edus').closest('.edus').last().remove();
+
+  });
 
 
 
-
-
-</script>
-
-<script>
-$(document).ready(function () {
-    $(".add").click(function () {
-        var length = $('.one').length;
-        var cloned = $(this).closest('.one').clone(true);
-        cloned.appendTo("#mainDiv").find('.sno').val(length + 1);
-        cloned.find(':input:not(".sno")').val(" ");
-        var parent = $(this).closest('.one');
-        calculate(parent);
-    });
-    $('.delete').click(function () {
-        var parent = $(this).closest('.one');
-        $(this).parents(".one").remove();
-        calculate(parent);
-    });
-});
-
-$(document).on('keyup', '.basic , .Other ,.Income_Tax', function () {
-	var parent = $(this).closest('.one');
-    calculate(parent);
-})
-
-
-function calculate(e){
-    var q = $(e).find('.basic').val();
-    var o = $(e).find('.Other').val();
-    var h = $(e).find('.House_Rent').val();
-    var hm = $(e).find('.House_Maintenance').val();
-    var en = $(e).find('.Entertainment_Allowance').val();
-    var con = $(e).find('.Conveyance_Allowance').val();
-    var it = $(e).find('.Income_Tax').val();
-    var sum = 0;
-    $(e).find('.House_Rent').val(q*50/100);
-    $(e).find('.Hospital_Allowance').val(q*20/100);
-    $(e).find('.House_Maintenance').val(q*10/100);
-    $(e).find('.Entertainment_Allowance').val(q*10/100);
-    $(e).find('.Conveyance_Allowance').val(q*10/100);
-
-    $('.House_Rent').each(function(i,e){
-        sum += +$(e).val();
-    });
-    $('.Hospital_Allowance').each(function(i,e){
-        sum += +$(e).val();
-    });
-    $('.House_Maintenance').each(function(i,e){
-        sum += +$(e).val();
-    });
-    $('.Entertainment_Allowance').each(function(i,e){
-        sum += +$(e).val();
-    });
-    $('.Conveyance_Allowance').each(function(i,e){
-        sum += +$(e).val();
-    });
-    $(e).find('.total').val((parseInt(q)+parseInt(h)));
-    $('.total').each(function(i,e){
-        sum += +$(e).val();
-    });
-
-};
 </script>
 
 {%endblock%}

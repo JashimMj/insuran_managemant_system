@@ -1,0 +1,108 @@
+{%extends 'index.html'%}
+{%block contant%}
+{%load static%}
+<div id="mainDiv">
+
+                    <div class="one">
+                        <div class="row" style="border:2px solid gray;">
+                            <div class="input-field col s1">
+                                <input class="sno" type="text" name="Sr" value="1">
+                                <label for="Sr">Sr</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Effect Date</label>
+                                <p><input placeholder="Effect Date"  name="effect_Date"
+                                          class="effect_Date" type="date"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Basic</label>
+                                <input class="basic" placeholder="Basic" name="basic" value="0">
+                            </div>
+                            <div class="col-md-12">
+                                <label>House Rent</label>
+                                <p><input placeholder="House Rent"  name="house_Rent" value="0" class="House_Rent"></p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Hospital Allowance</label>
+                                <p><input placeholder="Hospital Allowance" value="0"
+                                          name="hospital_Allowance"
+                                          class="Hospital_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>House Maintenance</label>
+                                <p><input placeholder="House Maintenance"
+                                          name="house_Maintenance" value="0"
+                                          class="House_Maintenance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Entertainment_Allowance</label>
+                                <p><input placeholder="Entertainment_Allowance"  value="0"
+                                          name="entertainment_Allowance"
+                                          class="Entertainment_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Conveyance Allowance</label>
+                                <p><input placeholder="Conveyance Allowance"  value="0"
+                                          name="conveyance_Allowance"
+                                          class="Conveyance_Allowance"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Other Allowance</label>
+                                <p><input placeholder="Other Allowance"  name="other"
+                                          value="0"
+                                          class="Other"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Gross Salary</label>
+                                <input class="gros" placeholder="Gross Salary" name="gross">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Income Tax</label>
+                                <p><input placeholder="Income Tax " name="income_Tax"
+                                          value="0"
+                                          class="Income_Tax"></p>
+                            </div>
+                            <div class="col-md-7">
+                                <button class="add" type="button">+</button>
+                                <button class="delete" type="button">-</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<script>
+$(document).ready(function () {
+    $(".add").click(function () {
+        var length = $('.one').length;
+        var cloned = $(this).closest('.one').clone(true);
+        cloned.appendTo("#mainDiv").find('.sno').val(length + 1);
+        cloned.find(':input:not(".sno")').val(" ");
+        var parent = $(this).closest('.one');
+        calculate(parent);
+    });
+    $('.delete').click(function () {
+        var parent = $(this).closest('.one');
+        $(this).parents(".one").remove();
+        calculate(parent);
+    });
+});
+
+$(document).on('keyup', '.basic', function () {
+	var parent = $(this).closest('.one');
+    calculate(parent);
+})
+
+
+function calculate(e){
+    var q = $(e).find('.basic').val();
+    var sum = 0;
+    $(e).find('.House_Rent').val(q);
+    $('.House_Rent').each(function(i,e){
+        sum += +$(e).val();
+    });
+    $('#Grand').val(sum);
+};
+</script>
+{%endblock%}
+
+
