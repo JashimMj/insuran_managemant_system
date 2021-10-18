@@ -26,7 +26,9 @@ body {
 h1 {
   text-align: center;
 }
-
+.bootstrap-select.form-control:not([class*=col-]) {
+    width: 70%;
+}
 input {
   padding: 10px;
   width: 100%;
@@ -110,28 +112,33 @@ button:hover {
 
 <section class="content">
     <div class="row">
-
+<nav class="navbar navbar-light bg-light">
+     <div class="col-md-6">
+  <form class="form-inline" action="{%url 'employeesedit'%}" method="POST">
+       {%csrf_token%}
+        <span><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+       <select class="form-control mr-sm-2 selectpicker" data-show-subtext="true"
+                                   data-live-search="true" name="abcgf" id="branch" required>
+                            <option selected>Select List</option>
+                            {%for x in employees%}
+                            <option value="{{x.id}}">Name: {{x.Name}} id: {{x.id}}</option>
+                            {%endfor%}
+                        </select>
+</span>
+  </form>
+     </div>
+</nav>
 
         <form id="regForm" action="{%url 'employeesinfosave'%}" method="POST" enctype="multipart/form-data">
             {%csrf_token%}
             <!-- One "tab" for each step in the form: -->
+
             <div class="tab">
                 <div class="row">
                     <h1>General Information</h1>
                     <div class="col-md-6">
-                        <label>Search Branch</label>
-
-                        <p><select class="form-control custom-select mr-sm-2 selectpicker" data-show-subtext="true"
-                                   data-live-search="true" name="producer" id="branch" required>
-                            <option selected>Select List</option>
-                            {%for x in employees%}
-                            <option value="{{x.id}}">{{x.Name}}</option>
-                            {%endfor%}
-                        </select></p>
-                    </div>
-                    <div class="col-md-6">
                         <label>ID No</label>
-                        <p><input placeholder="ID Number" oninput="this.className = ''" name="idno" value="{{number}}"
+                        <p><input placeholder="ID Number" oninput="this.className = ''" name="idnosw" value="{{number}}"
                                   id="idno"
                                   readonly></p>
                     </div>
@@ -409,6 +416,7 @@ button:hover {
                 <div style="float:right;">
                     <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
                     <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+
                 </div>
             </div>
             <!-- Circles which indicates the steps of the form: -->
@@ -511,139 +519,13 @@ function fixStepIndicator(n) {
 
     </div>
 </section>
-<script>
 
-$('#branch').change(function(){
- var bname= $(this).val();
-$.ajax({
-    url:"{%url 'employeesinfoselect'%}",
-    data:{
-    'bname':bname
-    },
-    success:function(response){
-
-        for (var key in response.employees)
-        {
-
-        $('#idno').val(response.employees[key].id);
-        $('#lname').val(response.employees[key].Name);
-        $('#department').val(response.employees[key].Department);
-        $('#designation').val(response.employees[key].Designation);
-        $('#father_Name').val(response.employees[key].Father_Name);
-        $('#mother_Name').val(response.employees[key].Mother_Name);
-        $('#spouse_Name').val(response.employees[key].Spouse_Name);
-        $('#Present_Address').val(response.employees[key].Present_Address);
-        $('#Permanant_Address').val(response.employees[key].Permanant_Address);
-        $('#NID').val(response.employees[key].Nid);
-        $('#Birth_Date').val(response.employees[key].Birth_Date);
-        $('#married').html("<option value="+response.employees[key].Married+">"+response.employees[key].Married+"</option>"+"<option value=No>No</option>");
-        $('#sex').html("<option value="+response.employees[key].Sex+">"+response.employees[key].Sex+"</option>"+"<option value=Female>Female</option>");
-        $('#Status').html("<option value="+response.employees[key].Status+">"+response.employees[key].Status+"</option>"+"<option value=Active>Active</option>"+"<option value=Released>Released</option>"+"<option value=Death>Death</option>"+"<option value=Terminated>Terminated</option>"+"<option value=Dismissal>Dismissal</option>"+"<option value=Retired>Retired</option>");
-        $('#Emp_Type').html("<option value="+response.employees[key].Emp_Type+">"+response.employees[key].Emp_Type+"</option>"+"<option value=Marketing Officer>Marketing Officer</option>"+"<option value=Desk Officer>Desk Officer</option>"+"<option value=Support Staff>Support Staff</option>"+"<option value=Branch In-charge>Branch In-charge</option>"+"<option value=Head of Department>Head of Department</option>"+"<option value=Retired>Retired</option>");
-        $('#Type').html("<option value="+response.employees[key].Type+">"+response.employees[key].Type+"</option>"+"<option value=Permanent>Permanent</option>"+"<option value=Probationary>Probationary</option>"+"<option value=Contract Basis>Contract Basis</option>");
-        $('#Phone').val(response.employees[key].Phone);
-        $('#Email').val(response.employees[key].Email);
-        $('#Joining_Date').val(response.employees[key].Joining_Date);
-        $('#Probationary_Period').val(response.employees[key].Probationary_Period);
-        $('#Confirmation_dates').val(response.employees[key].Confirmation_dates);
-        $('#ssbranch').val(response.brs[key].id);
-
-
-        }
-
-
-    },
-    error:function(response){
-    alert("Some Error");
-    },
-
-
-});
-
-});
-
-$('#branch').change(function(){
- var bname= $(this).val();
-$.ajax({
-    url:"{%url 'employeesselect'%}",
-    data:{
-    'bname':bname
-    },
-    success:function(response){
-    $('#abd').html(response);
-    },
-    error:function(response){
-    alert("Some Error");
-    },
-
-
-});
-
-});
-
-$('#branch').change(function(){
- var bname= $(this).val();
-$.ajax({
-    url:"{%url 'employeessalary'%}",
-    data:{
-    'bname':bname
-    },
-    success:function(response){
-    $('#abdes').html(response);
-    },
-    error:function(response){
-    alert("Some Error");
-    },
-
-
-});
-
-});
-
-
-$('#Gross').blur(function(){
- var salg = $('#Gross').val();
- var oth = $('#Other').val();
- var tax = $('#Income_Tax').val();
-
-$.ajax({
-    url:"{%url 'calculation'%}",
-    data:{
-    'salg':salg,
-    'tax':tax,
-    'oth':oth,
-
-
-    },
-    success:function(data){
-    $('#Basic').val(data.data.basic);
-    $('#House_Rent').val(data.data.house);
-    $('#Hospital_Allowance').val(data.data.medical);
-    $('#Entertainment_Allowance').val(data.data.entertaint);
-    $('#Conveyance_Allowance').val(data.data.convance);
-    $('#House_Maintenance').val(data.data.houseme);
-    $('#Gross').val(ggros);
-    },
-    error:function(response){
-    alert("Some Error");
-    },
-
-
-});
-
-});
-
-
-
-
-
-
-</script>
 
 <script>
 $("#sums").click(function(){
+{%for x in educa%}
     $('.edu:last').clone().appendTo("#abd");
-
+{%endfor%}
   });
   $("#less").click(function(){
     $('.edu').closest('.edu').last().remove();
@@ -673,7 +555,7 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('keyup', '.basic , .Other ,.Income_Tax', function () {
+$(document).on('keyup', '.basic , .Other ,.Income_Tax, .House_Rent', function () {
 	var parent = $(this).closest('.one');
     calculate(parent);
 })
@@ -695,26 +577,44 @@ function calculate(e){
     $(e).find('.Conveyance_Allowance').val(q*10/100);
 
     $('.House_Rent').each(function(i,e){
-        sum += +$(e).val();
+        house = +$(e).val();
     });
     $('.Hospital_Allowance').each(function(i,e){
-        sum += +$(e).val();
+        hospitals = +$(e).val();
     });
     $('.House_Maintenance').each(function(i,e){
-        sum += +$(e).val();
+        houseman = +$(e).val();
     });
     $('.Entertainment_Allowance').each(function(i,e){
-        sum += +$(e).val();
+        entertan = +$(e).val();
     });
     $('.Conveyance_Allowance').each(function(i,e){
-        sum += +$(e).val();
+        conva = +$(e).val();
     });
-    $(e).find('.total').val((parseInt(q)+parseInt(h)));
+
     $('.total').each(function(i,e){
-        sum += +$(e).val();
+         total = +$(e).val(house+hospitals+houseman+entertan+conva+parseInt(q)+parseInt(o)-parseInt(it));
     });
 
 };
+</script>
+<script>
+    $('#agd').change(function(){
+ var bname= $(this).val();
+$.ajax({
+    url:"{%url 'employeesedit'%}",
+    data:{
+    'bname':bname
+    },
+    success:function(response){
+    $('#abd').html(response);
+    },
+    error:function(response){
+    alert("Some Error");
+    },
+
+
+});
 </script>
 
 {%endblock%}

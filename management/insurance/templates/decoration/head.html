@@ -269,6 +269,13 @@
                     </ul>
                 </li>
                 {%endfor%}
+                {%if user.is_authenticated%}
+                <li>
+                 <a href="{%url 'logout'%}" data-toggle="dropdown-toggle"><i class="fa fa-sign-out" aria-hidden="true">Sign out</i></a>
+                </li>
+
+                {%endif%}
+
                 <!-- Control Sidebar Toggle Button -->
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -277,3 +284,4 @@
         </div>
     </nav>
 </header>
+

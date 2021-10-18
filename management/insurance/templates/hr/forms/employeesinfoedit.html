@@ -83,6 +83,10 @@ button:hover {
 .step.finish {
   background-color: #04AA6D;
 }
+.bootstrap-select.form-control:not([class*=col-]) {
+    width: 70%;
+}
+
 
 
 
@@ -96,7 +100,7 @@ button:hover {
 </style>
 <section class="content-header">
     <h1>
-        Employees Information
+        Employees Information Edit
     </h1>
 </section>
 
@@ -108,41 +112,45 @@ button:hover {
 
 <section class="content">
     <div class="row">
-
-
-        <form id="regForm" action="{%url 'employeesinfosave'%}" method="POST" enctype="multipart/form-data">
+<nav class="navbar navbar-light bg-light">
+     <div class="col-md-6">
+  <form class="form-inline" action="{%url 'employeesedit'%}" method="POST">
+       {%csrf_token%}
+        <span><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+       <select class="form-control mr-sm-2 selectpicker" data-show-subtext="true"
+                                   data-live-search="true" name="abcgf" id="branch" required>
+                            <option selected>Select List</option>
+                            {%for x in employees%}
+                            <option value="{{x.id}}">Name: {{x.Name}} id: {{x.id}}</option>
+                            {%endfor%}
+                        </select>
+</span>
+  </form>
+     </div>
+</nav>
+        <form id="regForm" action="{%url 'employeesupdate'%}" method="POST" enctype="multipart/form-data">
             {%csrf_token%}
             <!-- One "tab" for each step in the form: -->
             <div class="tab">
+                {%for x in emp%}
                 <div class="row">
-                    <h1>General Information</h1>
-                    <div class="col-md-6">
-                        <label>Search Branch</label>
-
-                        <p><select class="form-control custom-select mr-sm-2 selectpicker" data-show-subtext="true"
-                                   data-live-search="true" name="producer" id="branch" required>
-                            <option selected>Select List</option>
-                            {%for x in employees%}
-                            <option value="{{x.id}}">{{x.Name}}</option>
-                            {%endfor%}
-                        </select></p>
-                    </div>
+                    <h1>General Information Edit</h1>
                     <div class="col-md-6">
                         <label>ID No</label>
-                        <p><input placeholder="ID Number" oninput="this.className = ''" name="idno" value="{{number}}"
+
+                        <p><input placeholder="ID Number" oninput="this.className = ''" name="idno" value="{{x.id}}"
                                   id="idno"
                                   readonly></p>
                     </div>
                     <div class="col-md-6">
                         <label>Name</label>
-                        <p><input placeholder="Name" oninput="this.className = ''" name="lname" id="lname"></p>
+                        <p><input placeholder="Name" oninput="this.className = ''" name="lname" id="lname" value="{{x.Name}}"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Branch Name</label>
 
-                        <p><select class="form-control custom-select mr-sm-2 selectpicker" data-show-subtext="true"
-                                   data-live-search="true" name="Branch" id="sBranch" required>
-                            <option selected>Select List</option>
+                        <p><select class="form-control custom-select mr-sm-2 " name="Branch" id="ssbranch" required>
+                            <option value="{{x.Branch.id}}">{{x.Branch.Name}}</option>
                             {%for x in branch%}
                             <option value="{{x.id}}">{{x.Name}}</option>
                             {%endfor%}
@@ -152,63 +160,66 @@ button:hover {
                         <label>Department</label>
                         <p><select class="form-control custom-select mr-sm-2" name="department" id="department"
                                    required>
-                            <option selected>Select List</option>
+                             <option value="{{x.Department.id}}">{{x.Department.Name}}</option>
                             {%for x in dept%}
                             <option value="{{x.id}}">{{x.Name}}</option>
-                           {%endfor%}
+                            {%endfor%}
 
                         </select></p>
                     </div>
                     <div class="col-md-6">
                         <label>Designation</label>
-                         <p><select class="form-control custom-select mr-sm-2" name="designation" id="designation"
+                        <p><select class="form-control custom-select mr-sm-2" name="designation" id="designation"
                                    required>
-                            <option selected>Select List</option>
+                            <option value="{{x.Designation.id}}">{{x.Designation.Name}}</option>
                             {%for x in designa%}
                             <option value="{{x.id}}">{{x.Name}}</option>
-                             {%endfor%}
-                         </select></p>
+                            {%endfor%}
+                        </select></p>
                     </div>
                     <div class="col-md-6">
                         <label>Father Name</label>
                         <p><input placeholder="Father Name" oninput="this.className = ''" name="father_Name"
-                                  id="father_Name"></p>
+                                  id="father_Name" value="{{x.Father_Name}}"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Mother Name</label>
-                        <p><input placeholder="Mother Name" oninput="this.className = ''" name="mother_Name"
+                        <p><input placeholder="Mother Name" oninput="this.className = ''" name="mother_Name" value="{{x.Mother_Name}}"
                                   id="mother_Name"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Married</label>
                         <p><select class="form-control custom-select mr-sm-2" name="Married" id="married" required>
-                            <option selected>Select List</option>
+                            <option value="{{x.Married}}">{{x.Married}}</option>
+
                             <option value="Yes">Yes</option>
                             <option value="NO">No</option>
+
+
 
                         </select></p>
                     </div>
                     <div class="col-md-12">
                         <label>Present Address</label>
                         <p><textarea class="form-control" oninput="this.className = ''" name="present_Address"
-                                     id="Present_Address"></textarea></p>
+                                     id="Present_Address">{{x.Present_Address}}</textarea></p>
                     </div>
                     <div class="col-md-12">
                         <label>Permanant Address</label>
                         <p><textarea class="form-control" oninput="this.className = ''" name="permanant_Address"
-                                     id="Permanant_Address"></textarea></p>
+                                     id="Permanant_Address">{{x.Permanant_Address}}</textarea></p>
                     </div>
                     <div class="col-md-6">
                         <label>Spouse Name</label>
                         <p><input placeholder="Spouse_Name" oninput="this.className = ''" name="spouse_Name"
-                                  id="spouse_Name"></p>
+                                  id="spouse_Name" value="{{x.Spouse_Name}}"></p>
                     </div>
 
 
                     <div class="col-md-6">
                         <label>Sex</label>
                         <p><select class="form-control custom-select mr-sm-2" name="sex" id="sex" required>
-                            <option selected>Select List</option>
+                            <option value="{{x.Sex}}">{{x.Sex}}</option>
 
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -218,45 +229,46 @@ button:hover {
                     <div class="col-md-12">
                         <label>National id card</label>
                         <p><input placeholder="National id card" oninput="this.className = ''" name="nid"
-                                  id="NID"></p>
+                                  id="NID" value="{{x.Nid}}"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Birth Date</label>
                         <p><input placeholder="Joining Date" oninput="this.className = ''" name="birth_Date" type="date"
-                                  id="Birth_Date"></p>
+                                  id="Birth_Date" value='{{x.Birth_Date|date:"Y-m-d"}}'></p>
                     </div>
+
                     <div class="col-md-6">
                         <label>Phone</label>
-                        <p><input placeholder="National id card" oninput="this.className = ''" name="phone"
-                                  id="Phone"></p>
+                        <p><input placeholder="Phone Number" oninput="this.className = ''" name="phone"
+                                  id="Phone" value="{{x.Phone}}"></p>
                     </div>
                     <div class="col-md-12">
                         <label>Email</label>
                         <p><input placeholder="Email" oninput="this.className = ''" name="email"
-                                  id="Email"></p>
+                                  id="Email" value="{{x.Email}}"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Joining Date</label>
                         <p><input placeholder="Joining Date" oninput="this.className = ''" name="joining_Date"
                                   type="date"
-                                  id="Joining_Date"></p>
+                                  id="Joining_Date" value='{{x.Joining_Date|date:"Y-m-d"}}'></p>
                     </div>
                     <div class="col-md-6">
                         <label>Confirmation dates</label>
                         <p><input placeholder="Confirmation dates" oninput="this.className = ''"
                                   name="Cconfirmation_dates" type="date"
-                                  id="Confirmation_dates"></p>
+                                  id="Confirmation_dates" value='{{x.Confirmation_dates|date:"Y-m-d"}}'></p>
                     </div>
                     <div class="col-md-6">
                         <label>Probationary Period</label>
                         <p><input placeholder="Probationary Period" oninput="this.className = ''"
-                                  name="probationary_Period"
+                                  name="probationary_Period" value="{{x.Probationary_Period}}"
                                   id="Probationary_Period"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Job Status</label>
                         <p><select class="form-control custom-select mr-sm-2" name="status" id="Status" required>
-                            <option selected>Select List</option>
+                            <option value="{{x.Status}}">{{x.Status}}</option>
                             <option value="Active">Active</option>
                             <option value="Released">Released</option>
                             <option value="Death">Death</option>
@@ -268,7 +280,7 @@ button:hover {
                     <div class="col-md-12">
                         <label>Job Type</label>
                         <p><select class="form-control custom-select mr-sm-2" name="type" id="Type" required>
-                            <option selected>Select List</option>
+                            <option value="{{x.Type}}">{{x.Type}}</option>
                             <option value="Permanent">Permanent</option>
                             <option value="Probationary">Probationary</option>
                             <option value="Contract Basis">Contract Basis</option>
@@ -278,7 +290,7 @@ button:hover {
                     <div class="col-md-6">
                         <label>Employees Type</label>
                         <p><select class="form-control custom-select mr-sm-2" name="emp_Type" id="Emp_Type" required>
-                            <option selected>Select List</option>
+                            <option value="{{x.Emp_Type}}">{{x.Emp_Type}}</option>
                             <option value="Marketing Officer">Marketing Officer</option>
                             <option value="Desk Officer">Desk Officer</option>
                             <option value="Support Staff">Support Staff</option>
@@ -287,125 +299,143 @@ button:hover {
 
                         </select></p>
                     </div>
-
+                    {%endfor%}
                 </div>
             </div>
 
 
             <div class="tab">
-                <button id="sums" type="button">+</button>
-                <button id="less" type="button">-</button>
-                <div class="edu">
+<button class="sums" type="button">+</button>
+                <button class="less" type="button">-</button>
+                 {%for e in education%}
+
+                <div class="edu{{e.id}}">
+
+                    <input type="text" value="{{e.id}}" name="eid" class="eid">
                     <ul id="abd" style="padding:0px;margin:0px;">
+
                         <div class="row" style="border:2px solid gray;">
-                            <h1>Education information</h1>
+                            <h1>Education information Edit</h1>
                             <div class="col-md-6">
                                 <label>Exam Name</label>
                                 <p><input placeholder="Exam Name" oninput="this.className = ''" name="Ename"
-                                          class="Ename"></p>
+                                          class="Ename" value="{{e.Exam_Name}}"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>University Name</label>
                                 <p><input placeholder="Uname" oninput="this.className = ''" name="Uname"
-                                          id="Uname"></p>
+                                          id="Uname" value="{{e.Institute}}"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Education Board</label>
                                 <p><input placeholder="Education Board" oninput="this.className = ''" name="Eboard"
-                                          id="Eboard"></p>
+                                          id="Eboard" value="{{e.Board}}"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Passing year</label>
                                 <p><input placeholder="Passing year" oninput="this.className = ''" name="Pyear"
-                                          id="pYear"></p>
+                                          id="pYear" value="{{e.Pass_Year}}"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>CGPA</label>
                                 <p><input placeholder="CGPA" oninput="this.className = ''" name="cgpa"
-                                          id="cgpa"></p>
+                                          id="cgpa" value="{{e.Gpa}}"></p>
                             </div>
+
                         </div>
                     </ul>
+
                 </div>
+                 {%endfor%}
 
 
             </div>
             <div class="tab">
-                <button id="sumss" type="button">+</button>
-                <button id="lesss" type="button">-</button>
-                <div class="edus">
-                    <ul id="abde" style="padding:0px;margin:0px;">
-                        <h1>Employees Salary Information</h1>
+
+                <div id="mainDiv">
+
+                    <div class="one">
+                        {%for s in salary%}
                         <div class="row" style="border:2px solid gray;">
+                            <h1>Employees Salary Information Edit</h1>
+                            <div class="input-field col s1" hidden>
+                                <input class="sno" type="text" name="Sr" value="1">
+                                <label for="Sr">Sr</label>
+                            </div>
                             <div class="col-md-6">
                                 <label>Effect Date</label>
-                                <p><input placeholder="Effect Date" oninput="this.className = ''" name="effect_Date"
-                                          id="Effect_Date" type="date"></p>
+                                <p><input placeholder="Effect Date"  name="effect_Date"
+                                          class="effect_Date" type="date" value='{{s.Effect_Date|date:"Y-m-d"}}'></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Basic</label>
-                                <p><input placeholder="Basic" oninput="this.className = ''" name="basic" value="0"
-                                          id="Basic"></p>
+                                <input class="basic" placeholder="Basic" name="basic" value="{{s.Basic}}">
                             </div>
                             <div class="col-md-12">
                                 <label>House Rent</label>
-                                <p><input placeholder="House Rent" oninput="this.className = ''" name="house_Rent"
-                                          value="0"
-                                          id="House_Rent"></p>
+                                <p><input placeholder="House Rent"  name="house_Rent" value="{{s.House_Rent}}" class="House_Rent"></p>
                             </div>
 
                             <div class="col-md-6">
                                 <label>Hospital Allowance</label>
-                                <p><input placeholder="Hospital Allowance" oninput="this.className = ''" value="0"
+                                <p><input placeholder="Hospital Allowance" value="{{s.Hospital_Allowance}}"
                                           name="hospital_Allowance"
-                                          id="Hospital_Allowance"></p>
+                                          class="Hospital_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>House Maintenance</label>
-                                <p><input placeholder="House Maintenance" oninput="this.className = ''"
-                                          name="house_Maintenance" value="0"
-                                          id="House_Maintenance"></p>
+                                <p><input placeholder="House Maintenance"
+                                          name="house_Maintenance" value="{{s.House_Maintenance}}"
+                                          class="House_Maintenance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Entertainment_Allowance</label>
-                                <p><input placeholder="Entertainment_Allowance" oninput="this.className = ''" value="0"
+                                <p><input placeholder="Entertainment_Allowance"  value="{{s.Entertainment_Allowance}}"
                                           name="entertainment_Allowance"
-                                          id="Entertainment_Allowance"></p>
+                                          class="Entertainment_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Conveyance Allowance</label>
-                                <p><input placeholder="Conveyance Allowance" oninput="this.className = ''" value="0"
+                                <p><input placeholder="Conveyance Allowance"  value="{{s.Conveyance_Allowance}}"
                                           name="conveyance_Allowance"
-                                          id="Conveyance_Allowance"></p>
+                                          class="Conveyance_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Other Allowance</label>
-                                <p><input placeholder="Other Allowance" oninput="this.className = ''" name="other"
-                                          value="0"
-                                          id="Other"></p>
+                                <p><input placeholder="Other Allowance"  name="other"
+                                          value="{{s.Other}}"
+                                          class="Other"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Gross Salary</label>
-                                <p><input placeholder="Gross Salary " oninput="this.className = ''" name="gross"
-                                          value="0"
-                                          id="Gross"></p>
+                                <p><input class="total" placeholder="Gross Salary" name="gross" value="{{s.Gross}}"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Income Tax</label>
-                                <p><input placeholder="Income Tax " oninput="this.className = ''" name="income_Tax"
-                                          value="0"
-                                          id="Income_Tax"></p>
+                                <p><input placeholder="Income Tax " name="income_Tax"
+                                          value="{{s.Income_Tax}}"
+                                          class="Income_Tax"></p>
+                            </div>
+                            <div class="col-md-7">
+                                <button class="add" type="button">+</button>
+                                <button class="delete" type="button">-</button>
                             </div>
                         </div>
-                    </ul>
+                        {%endfor%}
+                    </div>
                 </div>
             </div>
 
 
             <div style="overflow:auto;">
                 <div style="float:right;">
-                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                     <a href="{%url 'employeesinfo'%}" class="btn btn-warning"> Back </a>
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-success">Next</button>
+
+                    
+
+
                 </div>
             </div>
             <!-- Circles which indicates the steps of the form: -->
@@ -502,6 +532,8 @@ function fixStepIndicator(n) {
 
 
 
+
+
         </script>
 
     </div>
@@ -516,9 +548,10 @@ $.ajax({
     'bname':bname
     },
     success:function(response){
+
         for (var key in response.employees)
         {
-        console.log(response)
+
         $('#idno').val(response.employees[key].id);
         $('#lname').val(response.employees[key].Name);
         $('#department').val(response.employees[key].Department);
@@ -540,8 +573,11 @@ $.ajax({
         $('#Joining_Date').val(response.employees[key].Joining_Date);
         $('#Probationary_Period').val(response.employees[key].Probationary_Period);
         $('#Confirmation_dates').val(response.employees[key].Confirmation_dates);
+        $('#ssbranch').val(response.brs[key].id);
+
 
         }
+
 
     },
     error:function(response){
@@ -572,13 +608,39 @@ $.ajax({
 
 });
 
+$('#branch').change(function(){
+ var bname= $(this).val();
+$.ajax({
+    url:"{%url 'employeessalary'%}",
+    data:{
+    'bname':bname
+    },
+    success:function(response){
+    $('.one').html(response);
+    },
+    error:function(response){
+    alert("Some Error");
+    },
+
+
+});
+
+});
+
 
 $('#Gross').blur(function(){
- var salg= $(this).val();
+ var salg = $('#Gross').val();
+ var oth = $('#Other').val();
+ var tax = $('#Income_Tax').val();
+
 $.ajax({
     url:"{%url 'calculation'%}",
     data:{
-    'salg':salg
+    'salg':salg,
+    'tax':tax,
+    'oth':oth,
+
+
     },
     success:function(data){
     $('#Basic').val(data.data.basic);
@@ -587,6 +649,7 @@ $.ajax({
     $('#Entertainment_Allowance').val(data.data.entertaint);
     $('#Conveyance_Allowance').val(data.data.convance);
     $('#House_Maintenance').val(data.data.houseme);
+    $('#Gross').val(ggros);
     },
     error:function(response){
     alert("Some Error");
@@ -600,28 +663,86 @@ $.ajax({
 
 
 
+
+
 </script>
 
 <script>
-$("#sums").click(function(){
-    $('.edu:last').clone().appendTo("#abd");
+$(".sums").click(function(){
+
+    $('.edu{{educa.id}}').clone().removeClass('.edu{{educa.id}}').appendTo("#abd").find(':input(".eid")').val(" ");
 
   });
-  $("#less").click(function(){
+  $(".less").click(function(){
     $('.edu').closest('.edu').last().remove();
 
   });
-  $("#sumss").click(function(){
-    $('.edus:last').clone().appendTo("#abde");
-
-  });
-  $("#lesss").click(function(){
-    $('.edus').closest('.edus').last().remove();
-
-  });
 
 
 
+
+
+</script>
+
+<script>
+$(document).ready(function () {
+    $(".add").click(function () {
+        var length = $('.one').length;
+        var cloned = $(this).closest('.one').clone(true);
+        cloned.appendTo("#mainDiv").find('.sno').val(length + 1);
+        cloned.find(':input:not(".sno")').val(" ");
+        var parent = $(this).closest('.one');
+        calculate(parent);
+    });
+    $('.delete').click(function () {
+        var parent = $(this).closest('.one');
+        $(this).parents(".one").remove();
+        calculate(parent);
+    });
+});
+
+$(document).on('keyup', '.basic , .Other ,.Income_Tax, .House_Rent', function () {
+	var parent = $(this).closest('.one');
+    calculate(parent);
+})
+
+
+function calculate(e){
+    var q = $(e).find('.basic').val();
+    var o = $(e).find('.Other').val();
+    var h = $(e).find('.House_Rent').val();
+    var hm = $(e).find('.House_Maintenance').val();
+    var en = $(e).find('.Entertainment_Allowance').val();
+    var con = $(e).find('.Conveyance_Allowance').val();
+    var it = $(e).find('.Income_Tax').val();
+    var sum = 0;
+    $(e).find('.House_Rent').val(q*50/100);
+    $(e).find('.Hospital_Allowance').val(q*20/100);
+    $(e).find('.House_Maintenance').val(q*10/100);
+    $(e).find('.Entertainment_Allowance').val(q*10/100);
+    $(e).find('.Conveyance_Allowance').val(q*10/100);
+
+    $('.House_Rent').each(function(i,e){
+        house = +$(e).val();
+    });
+    $('.Hospital_Allowance').each(function(i,e){
+        hospitals = +$(e).val();
+    });
+    $('.House_Maintenance').each(function(i,e){
+        houseman = +$(e).val();
+    });
+    $('.Entertainment_Allowance').each(function(i,e){
+        entertan = +$(e).val();
+    });
+    $('.Conveyance_Allowance').each(function(i,e){
+        conva = +$(e).val();
+    });
+
+    $('.total').each(function(i,e){
+         total = +$(e).val(house+hospitals+houseman+entertan+conva+parseInt(q)+parseInt(o)-parseInt(it));
+    });
+
+};
 </script>
 
 {%endblock%}

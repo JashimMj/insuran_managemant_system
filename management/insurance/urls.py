@@ -1,11 +1,12 @@
 from django.urls import path
+from django.conf.urls import url
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 urlpatterns = [
-    path('media/', serve,{'document_root': settings.MEDIA_ROOT}),
-    path('static', serve,{'document_root': settings.STATIC_ROOT}),
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     path('', views.mainV,name="main"),
     path('', views.indexV, name="index"),
     path('branch/select/', views.branchselectV, name="branchselect"),
@@ -13,6 +14,10 @@ urlpatterns = [
     path('main/dashboard/', views.maindashboardV, name="maindashboard"),
     # ---------------------Admin------------------------------
     path('admins/dashboard/', views.admindashboardV, name="admindashboard"),
+    # ---------------------Loging------------------------------
+    path('login/', views.logningV, name="login"),
+    path('logout/', views.logoutV, name="logout"),
+
     # ---------------------------branch info---------------------------
     path('branch/information/', views.branchinfoV, name="branchinfo"),
     path('branch/information/save/', views.branchinfosaveV, name="branchinfosave"),
@@ -81,6 +86,8 @@ urlpatterns = [
     path('employees/data/select2', views.employeesselectV, name="employeesselect"),
     path('employees/data/select3', views.employeessalaryV, name="employeessalary"),
     path('employees/calculation/', views.calculationV, name="calculation"),
+    path('employees/edit/', views.employeesinfoeditV, name="employeesedit"),
+    path('employees/update/', views.employeesinfoupdateV, name="employeesupdate"),
     #------------------------------Department---------------------------------
     path('Department/info',views.DepartmentV,name='department'),
     path('Department/info/save/',views.DepartmentsaveV,name='departmentsaved'),
@@ -111,7 +118,6 @@ urlpatterns = [
     #---------------------------TEST_______________________________
     path('test/', views.testV, name="test"),
 
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

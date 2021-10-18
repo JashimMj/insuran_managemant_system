@@ -48,12 +48,24 @@ class UserBranchM(models.Model):
         return self.User_Id.username +' ' +self.Branch_Code.Name
 
 
+class Department(models.Model):
+    id =models.AutoField(primary_key=True)
+    Name=models.CharField(max_length=255,null=True,blank=True)
+    def __str__(self):
+        return self.Name
+
+class Designation(models.Model):
+    id =models.AutoField(primary_key=True)
+    Name=models.CharField(max_length=255,null=True,blank=True)
+    def __str__(self):
+        return self.Name
+
 class EmployeesinfoM(models.Model):
     id=models.AutoField(primary_key=True)
     Name=models.CharField(max_length=255,null=True,blank=True)
     Branch=models.ForeignKey(BranchInformationM,on_delete=models.CASCADE,null=True,blank=True)
-    Department=models.CharField(max_length=255,null=True,blank=True)
-    Designation=models.CharField(max_length=255,null=True,blank=True)
+    Department=models.ForeignKey(Department,on_delete=models.CASCADE,null=True,blank=True)
+    Designation=models.ForeignKey(Designation,on_delete=models.CASCADE,null=True,blank=True)
     Father_Name=models.CharField(max_length=255,null=True,blank=True)
     Mother_Name=models.CharField(max_length=255,null=True,blank=True)
     Married=models.CharField(max_length=255,null=True,blank=True)
@@ -154,17 +166,7 @@ class Currency(models.Model):
         return self.name
 
 
-class Department(models.Model):
-    id =models.AutoField(primary_key=True)
-    Name=models.CharField(max_length=255,null=True,blank=True)
-    def __str__(self):
-        return self.Name
 
-class Designation(models.Model):
-    id =models.AutoField(primary_key=True)
-    Name=models.CharField(max_length=255,null=True,blank=True)
-    def __str__(self):
-        return self.Name
 
 
 

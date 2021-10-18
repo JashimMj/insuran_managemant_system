@@ -10,15 +10,39 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 import datetime
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
+def logningV(request):
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    if request.method=='POST':
+        name=request.POST.get('name')
+        password=request.POST.get('password')
+        user = auth.authenticate(username=name, password=password)
+        if user is not None:
+            auth.login(request, user)
+            if 'next' in request.POST:
+                # return redirect(request.POST.get('next'))
+                return redirect('/')
+            else:
+                return redirect('/')
+        else:
+            messages.info(request, 'User is not valid')
+            return redirect('/loging/')
+    else:
+        return render(request,'loging/logings.html',{'company':company})
 
+def logoutV(request):
+    auth.logout(request)
+    return redirect('/login/')
 
+@login_required(login_url='login')
 def indexV(request):
     company = BranchInformationM.objects.filter(Branch_Code=1)
     userprofile = UserProfileM.objects.filter(id=request.user.id)
     return render(request,'index.html',{'company':company,'userprofile':userprofile})
 
+@login_required(login_url='login')
 def mainV(request):
     company = BranchInformationM.objects.filter(Branch_Code=1)
     ubranch= UserBranchM.objects.filter(User_Id=request.user.id)
@@ -26,7 +50,7 @@ def mainV(request):
     currentbranch=BranchInformationM.objects.raw('select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',[request.user.id])
     return render(request,'pages/main.html',{'company':company,'userprofile':userprofile,'ubranch':ubranch,'currentbranch':currentbranch})
 
-
+@login_required(login_url='login')
 def maindashboardV(request):
     currentbranch = BranchInformationM.objects.raw(
         'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
@@ -184,6 +208,7 @@ def createusersaveV(request):
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         branch_code = request.POST.getlist('branch')
+        currentbrs = request.POST.get('currentbr')
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'User Name already taken')
@@ -196,13 +221,13 @@ def createusersaveV(request):
                 store = FileSystemStorage()
                 filename = store.save(image.name, image)
                 profile_pic_url = store.url(filename)
-                user = User.objects.create_user(username=username, email=email, password=password1)
+                user = User.objects.create_user(username=username, email=email, password=password1, last_name=currentbrs)
                 user.save()
                 sing = UserProfileM(user=user,Phone=phone, Present_Address=present, Permanant_Address=permanent, Image=filename)
                 sing.save()
                 c = min([len(branch_code)])
                 for i in range(c):
-                    users=User.objects.get(pk=request.user.id)
+                    # users=User.objects.get(pk=request.user.id)
                     Branch=BranchInformationM.objects.get(Branch_Code=branch_code[i])
                     data = UserBranchM.objects.create(User_Id=user, Branch_Code=Branch)
                 messages.info(request, 'Data Saved')
@@ -219,6 +244,7 @@ def createusersaveV(request):
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         branch_code = request.POST.getlist('branch')
+        currentbrs = request.POST.get('currentbr')
         if password1 == password2:
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'User Name already taken')
@@ -228,14 +254,14 @@ def createusersaveV(request):
                 return redirect('/Singup/')
             else:
 
-                user = User.objects.create_user(username=username, email=email, password=password1)
+                user = User.objects.create_user(username=username, email=email, password=password1,last_name=currentbrs)
                 user.save()
                 sing = UserProfileM(user=user, Phone=phone, Present_Address=present, Permanant_Address=permanent,
                          )
                 sing.save()
                 c = min([len(branch_code)])
                 for i in range(c):
-                    users = User.objects.get(pk=request.user.id)
+                    # users = User.objects.get(pk=request.user.id)
                     Branch = BranchInformationM.objects.get(Branch_Code=branch_code[i])
                     data = UserBranchM.objects.create(User_Id=user, Branch_Code=Branch)
                 messages.info(request, 'Data Saved')
@@ -250,6 +276,7 @@ def createusersaveV(request):
             password1 = request.POST.get('password1')
             password2 = request.POST.get('password2')
             branch_code = request.POST.getlist('branch')
+            currentbrs = request.POST.get('currentbr')
             if password1 == password2:
                 if User.objects.filter(username=username).exists():
                     messages.info(request, 'User Name already taken')
@@ -262,14 +289,14 @@ def createusersaveV(request):
                     store = FileSystemStorage()
                     filename = store.save(image.name, image)
                     profile_pic_url = store.url(filename)
-                    user = User.objects.create_user(username=username, email=email, password=password1)
+                    user = User.objects.create_user(username=username, email=email, password=password1,last_name=currentbrs)
                     user.save()
                     sing = UserProfileM(user=user, Phone=phone, Present_Address=present, Permanant_Address=permanent,
                                         Image=filename)
                     sing.save()
                     c = min([len(branch_code)])
                     for i in range(c):
-                        users = User.objects.get(pk=request.user.id)
+                        # users = User.objects.get(pk=request.user.id)
                         Branch = BranchInformationM.objects.get(Branch_Code=branch_code[i])
                         data = UserBranchM.objects.create(User_Id=user, Branch_Code=Branch)
                     messages.info(request, 'Data Saved')
@@ -298,7 +325,8 @@ def employeesinfoV(request):
     branch=BranchInformationM.objects.all()
     dept=Department.objects.all()
     designa=Designation.objects.all()
-    number=employeesid +1
+    number=employeesid + int(1)
+
 
     return render(request,'hr/forms/employeesinfo.html',{'ubranch':ubranch,'company':company,'currentbranch':currentbranch,
                                                          'employees':employees,'number':number,'branch':branch,'dept':dept,
@@ -311,6 +339,7 @@ def employeesinfoselectV(request):
         for x in employees:
             brs=BranchInformationM.objects.filter(id=x.Branch.id)
             sal=EmployeesSalary.objects.filter(Ename=x.id)
+
 
 
 
@@ -354,11 +383,14 @@ def calculationV(request):
 
 def employeesinfosaveV(request):
     if request.method=='POST':
+        idno=request.POST.get('idnosw')
         name=request.POST.get('lname')
         branch=request.POST.get('Branch')
         br=BranchInformationM.objects.get(id=branch)
         department=request.POST.get('department')
+        dep=Department.objects.get(id=department)
         designation=request.POST.get('designation')
+        desig = Designation.objects.get(id=designation)
         father_Name=request.POST.get('father_Name')
         mother_Name=request.POST.get('mother_Name')
         married=request.POST.get('Married')
@@ -396,7 +428,7 @@ def employeesinfosaveV(request):
         grossss=request.POST.getlist('gross')
         income=request.POST.getlist('income_Tax')
 
-        data1=EmployeesinfoM(Name=name,Branch=br,Department=department,Designation=designation,
+        data1=EmployeesinfoM(id=idno,Name=name,Branch=br,Department=dep,Designation=desig,
                                             Father_Name=father_Name,Mother_Name=mother_Name,Married=married,Spouse_Name=spouse_Name,
                                             Sex=sex,Birth_Date=bdate,Nid=nid,Joining_Date=jdate,
                                             Present_Address=present_Address,Permanant_Address=permanant_Address,Phone=phone,Email=email,
@@ -416,6 +448,112 @@ def employeesinfosaveV(request):
             dataemps.save()
 
         messages.info(request, 'Data Saved')
+    return redirect('/employees/info/')
+
+def employeesinfoeditV(request):
+    currentbranch = BranchInformationM.objects.raw(
+        'select a.id,a.Name from insurance_branchinformationm a,auth_user b where b.id=%s and a.branch_code=b.last_name',
+        [request.user.id])
+    ubranch = UserBranchM.objects.filter(User_Id=request.user.id)
+    company = BranchInformationM.objects.filter(Branch_Code=1)
+    companys = BranchInformationM.objects.all()
+
+    produ = request.POST.get('abcgf')
+    emp=EmployeesinfoM.objects.filter(pk=produ)
+    branch=BranchInformationM.objects.all()
+    dept = Department.objects.all()
+    designa = Designation.objects.all()
+    education=EmployeesEducation.objects.filter(Ename=produ).order_by('id')
+    educa=EmployeesEducation.objects.filter(Ename=produ)[0]
+    salary=EmployeesSalary.objects.filter(Ename=produ)
+    return render(request,'hr/forms/employeesinfoedit.html',{'currentbranch':currentbranch,'company':company,
+                                                             'companys':companys,'ubranch':ubranch,'emp':emp,
+                                                             'branch':branch,'dept':dept,'designa':designa,
+                                                             'education':education,'salary':salary,'educa':educa})
+def employeesinfoupdateV(request):
+    idno=request.POST.get('idno')
+    name = request.POST.get('lname')
+    branch = request.POST.get('Branch')
+    br = BranchInformationM.objects.get(id=branch)
+    department = request.POST.get('department')
+    dept=Department.objects.get(id=department)
+    designation = request.POST.get('designation')
+    desig=Designation.objects.get(id=designation)
+    father_Name = request.POST.get('father_Name')
+    mother_Name = request.POST.get('mother_Name')
+    married = request.POST.get('Married')
+    present_Address = request.POST.get('present_Address')
+    permanant_Address = request.POST.get('permanant_Address')
+    spouse_Name = request.POST.get('spouse_Name')
+    sex = request.POST.get('sex')
+    nid = request.POST.get('nid')
+    birth_Date = request.POST.get('birth_Date')
+    bdate = datetime.datetime.strptime(birth_Date, '%Y-%m-%d')
+    phone = request.POST.get('phone')
+    email = request.POST.get('email')
+    joining_Date = request.POST.get('joining_Date')
+    jdate = datetime.datetime.strptime(joining_Date, '%Y-%m-%d')
+    Cconfirmation_dates = request.POST.get('Cconfirmation_dates')
+    cdate = datetime.datetime.strptime(Cconfirmation_dates, '%Y-%m-%d')
+    probationary_Period = request.POST.get('probationary_Period')
+    status = request.POST.get('status')
+    type = request.POST.get('type')
+    Emp_Type = request.POST.get('emp_Type')
+
+    Emp_Type = request.POST.get('emp_Type')
+    ename = request.POST.getlist('Ename')
+    uname = request.POST.getlist('Uname')
+    eboard = request.POST.getlist('Eboard')
+    pyear = request.POST.getlist('Pyear')
+    cgpa = request.POST.getlist('cgpa')
+    effect_Datea = request.POST.getlist('effect_Date')
+    eid = request.POST.getlist('eid')
+
+    data=EmployeesinfoM.objects.get(id=idno)
+    data.Name=name
+    data.Branch=br
+    data.Department=dept
+    data.Designation=desig
+    data.Father_Name=father_Name
+    data.Mother_Name=mother_Name
+    data.Married=married
+    data.Spouse_Name=spouse_Name
+    data.Sex=sex
+    data.Birth_Date=bdate
+    data.Present_Address=present_Address
+    data.Permanant_Address=permanant_Address
+    data.Phone=phone
+    data.Email=email
+    data.Nid=nid
+    data.Joining_Date=jdate
+    data.Probationary_Period=probationary_Period
+    data.Confirmation_dates=cdate
+    data.Status=status
+    data.Type=type
+    data.Emp_Type=Emp_Type
+    data.save()
+    c = min([len(ename), len(uname), len(eboard), len(pyear), len(cgpa), len(eid)])
+    for i in range(c):
+        if eid[i] !=' ':
+            education = EmployeesinfoM.objects.get(Name=name)
+            data = EmployeesEducation.objects.get(id=eid[i])
+            data.Ename = education
+            data.Exam_Name = ename[i]
+            data.Institute = uname[i]
+            data.Board = eboard[i]
+            data.Pass_Year = pyear[i]
+            data.Gpa = cgpa[i]
+            data.save()
+
+        else:
+
+            education = EmployeesinfoM.objects.get(Name=name)
+            data = EmployeesEducation(Ename=education, Exam_Name=ename[i], Institute=uname[i], Board=eboard[i],
+                                      Pass_Year=pyear[i], Gpa=cgpa[i])
+            data.save()
+
+
+    messages.info(request,'Data save')
     return redirect('/employees/info/')
 
 def branchinfoeditV(request,id=0):

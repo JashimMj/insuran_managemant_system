@@ -1,5 +1,5 @@
   {%for x in ab%}
-<div class="row" style="border:2px solid gray;">
+ <div class="row" style="border:2px solid gray; padding:10px;">
                         <h1>Employees Salary Information</h1>
                         <div class="row" style="border:2px solid gray;">
                             <div class="col-md-6">
@@ -62,7 +62,72 @@
                                           value="{{x.Income_Tax}}"
                                           id="Income_Tax"></p>
                             </div>
+                            <div class="col-md-7">
+                                <button class="add" type="button">+</button>
+                                <button class="delete" type="button">-</button>
+                            </div>
                         </div>
 
 </div>
+
+  <script>
+$(document).ready(function () {
+    $(".add").click(function () {
+        var length = $('.one').length;
+        var cloned = $(this).closest('.one').clone(true);
+        cloned.appendTo("#mainDiv").find('.sno').val(length + 1);
+        cloned.find(':input:not(".sno")').val(" ");
+        var parent = $(this).closest('.one');
+        calculate(parent);
+    });
+    $('.delete').click(function () {
+        var parent = $(this).closest('.one');
+        $(this).parents(".one").remove();
+        calculate(parent);
+    });
+});
+
+$(document).on('keyup', '.basic , .Other ,.Income_Tax, .House_Rent', function () {
+	var parent = $(this).closest('.one');
+    calculate(parent);
+})
+
+
+function calculate(e){
+    var q = $(e).find('.basic').val();
+    var o = $(e).find('.Other').val();
+    var h = $(e).find('.House_Rent').val();
+    var hm = $(e).find('.House_Maintenance').val();
+    var en = $(e).find('.Entertainment_Allowance').val();
+    var con = $(e).find('.Conveyance_Allowance').val();
+    var it = $(e).find('.Income_Tax').val();
+    var sum = 0;
+    $(e).find('.House_Rent').val(q*50/100);
+    $(e).find('.Hospital_Allowance').val(q*20/100);
+    $(e).find('.House_Maintenance').val(q*10/100);
+    $(e).find('.Entertainment_Allowance').val(q*10/100);
+    $(e).find('.Conveyance_Allowance').val(q*10/100);
+
+    $('.House_Rent').each(function(i,e){
+        house = +$(e).val();
+    });
+    $('.Hospital_Allowance').each(function(i,e){
+        hospitals = +$(e).val();
+    });
+    $('.House_Maintenance').each(function(i,e){
+        houseman = +$(e).val();
+    });
+    $('.Entertainment_Allowance').each(function(i,e){
+        entertan = +$(e).val();
+    });
+    $('.Conveyance_Allowance').each(function(i,e){
+        conva = +$(e).val();
+    });
+
+    $('.total').each(function(i,e){
+         total = +$(e).val(house+hospitals+houseman+entertan+conva+parseInt(q)+parseInt(o)-parseInt(it));
+    });
+
+};
+</script>
   {%endfor%}
