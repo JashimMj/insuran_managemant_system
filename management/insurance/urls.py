@@ -88,6 +88,8 @@ urlpatterns = [
     path('employees/calculation/', views.calculationV, name="calculation"),
     path('employees/edit/', views.employeesinfoeditV, name="employeesedit"),
     path('employees/update/', views.employeesinfoupdateV, name="employeesupdate"),
+    path('employees/delete/edu/<int:id>', views.employeesedudeletestuV, name="employeesedudeletestu"),
+    path('employees/delete/sal/<int:id>', views.employeessaldeletestuV, name="employeessaldeletestu"),
     #------------------------------Department---------------------------------
     path('Department/info',views.DepartmentV,name='department'),
     path('Department/info/save/',views.DepartmentsaveV,name='departmentsaved'),

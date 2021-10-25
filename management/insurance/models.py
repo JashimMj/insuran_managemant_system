@@ -157,6 +157,20 @@ class VoyageVia(models.Model):
     def __str__(self):
         return self.name
 
+class VoyageFrom(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=255,null=True,blank=True)
+    objects = models.Manager()
+    def __str__(self):
+        return self.name
+
+class VoyageTo(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=255,null=True,blank=True)
+    objects = models.Manager()
+    def __str__(self):
+        return self.name
+
 
 class Currency(models.Model):
     id = models.AutoField(primary_key=True)
@@ -164,6 +178,50 @@ class Currency(models.Model):
     objects = models.Manager()
     def __str__(self):
         return self.name
+
+
+class RiskCover(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=500,null=True,blank=True)
+    objects = models.Manager()
+    def __str__(self):
+        return self.name
+
+class InsuranceType(models.Model):
+    id = models.AutoField(primary_key=True)
+    name=models.CharField(max_length=500,null=True,blank=True)
+    objects = models.Manager()
+    def __str__(self):
+        return self.name
+
+
+class MarineQuatationM(models.Model):
+    id = models.AutoField(primary_key=True)
+    Bill_date=models.DateField(auto_now=True)
+    Insurance_Type=models.ForeignKey(InsuranceType,on_delete=models.CASCADE,null=True,blank=True)
+    Client_NameM=models.ForeignKey(ClientInformation,on_delete=models.CASCADE,null=True,blank=True)
+    Client_AddressM=models.ForeignKey(ClentAddressInformation,on_delete=models.CASCADE,null=True,blank=True)
+    Bank_Name=models.ForeignKey(Bankinformation,on_delete=models.CASCADE,null=True,blank=True)
+    Bank_Branch=models.ForeignKey(BankBranch,on_delete=models.CASCADE,null=True,blank=True)
+    Bank_Address=models.CharField(max_length=1000,null=True,blank=True)
+    Interest_covered=models.CharField(max_length=1000,null=True,blank=True)
+    Voyage_From=models.ForeignKey(VoyageFrom,on_delete=models.CASCADE,null=True,blank=True)
+    Voyage_To=models.ForeignKey(VoyageTo,on_delete=models.CASCADE,null=True,blank=True)
+    Voyage_Via=models.ForeignKey(VoyageVia,on_delete=models.CASCADE,null=True,blank=True)
+    Transit_By=models.ForeignKey(TransitBy,on_delete=models.CASCADE,null=True,blank=True)
+    Sdate=models.DateField(null=True,blank=True)
+    Edate=models.DateField(null=True,blank=True)
+    Sum_insured=models.IntegerField(null=True,blank=True)
+    Extra1=models.IntegerField(null=True,blank=True)
+    Extra2=models.IntegerField(null=True,blank=True)
+    Currency=models.IntegerField(null=True,blank=True)
+    Excrate=models.IntegerField(null=True,blank=True)
+    Bdtamount=models.IntegerField(null=True,blank=True)
+    Declaration=models.CharField(max_length=600,null=True,blank=True)
+    Producer=models.CharField(max_length=600,null=True,blank=True)
+    RiskCover=models.ForeignKey(RiskCover,on_delete=models.CASCADE,null=True,blank=True)
+
+
 
 
 

@@ -16,22 +16,23 @@
 {%endfor%}
 
 <section class="content">
-    <div class="row">
-        <div class="col-md-8">
+    <form action="{%url 'branchinfosave'%}" method="POST"
+          data-client-url="{%url 'qmarineselectclient'%}" data-bank-url="{%url 'qmarineselectbank'%}"
+          data-bankadd-url="{%url 'qmarineselectbankadd'%}" data-fdate-url="{%url 'qmarinesendate'%}"
+          enctype="multipart/form-data"
+          class="subcall">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-md-8">
 
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Manrine Quotation</h3>
-                </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                <form action="{%url 'branchinfosave'%}" method="POST"
-                      data-client-url="{%url 'qmarineselectclient'%}" data-bank-url="{%url 'qmarineselectbank'%}"
-                      data-bankadd-url="{%url 'qmarineselectbankadd'%}" data-fdate-url="{%url 'qmarinesendate'%}"
-                      enctype="multipart/form-data"
-                      class="subcall">
-                    {%csrf_token%}
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Manrine Quotation</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
                     <div class="row">
                         <div class="box-body">
                             <div class="col-md-12">
@@ -70,7 +71,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Client Name</label>
-                                        <select class="form-control custom-select mr-sm-2 selectpicker"   data-show-subtext="true" data-live-search="true" id="client" name="cname"
+                                        <select class="form-control custom-select mr-sm-2 selectpicker"
+                                                data-show-subtext="true" data-live-search="true" id="client"
+                                                name="cname"
                                                 required>
                                             <option selected>Select List</option>
                                             {%for x in Client%}
@@ -83,18 +86,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Client Address</label>
-                                         <select class="form-control custom-select mr-sm-2" id="select2" name="cname"
+                                        <select class="form-control custom-select mr-sm-2" id="select2" name="cname"
                                                 required>
-                                              <option selected>Select List</option>
+                                            <option selected>Select List</option>
 
-                                         </select>
+                                        </select>
 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="bname">Bank Name</label>
-                                        <select class="form-control custom-select mr-sm-2 selectpicker"   data-show-subtext="true" data-live-search="true" id="bname" name="bname"
+                                        <select class="form-control custom-select mr-sm-2 selectpicker"
+                                                data-show-subtext="true" data-live-search="true" id="bname" name="bname"
                                                 required>
                                             <option selected>Select List</option>
                                             {%for x in Bank%}
@@ -129,18 +133,28 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail19">Voyage From</label>
-                                        <textarea class="form-control" name="Vfrom" id="exampleInputEmail19"
-                                                  placeholder="Voyage From"></textarea>
+                                        <label>Voyage From</label>
+                                        <select class="form-control custom-select mr-sm-2" name="voyagefrom" required>
+                                            <option selected>Select List</option>
+                                            {%for x in voyafrom%}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%endfor%}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail9">Voyage To</label>
-                                        <textarea class="form-control" name="vto" id="exampleInputEmail9"
-                                                  placeholder="Voyage From"></textarea>
+                                        <label>Voyage To</label>
+                                        <select class="form-control custom-select mr-sm-2" name="voyageto" required>
+                                            <option selected>Select List</option>
+                                            {%for x in VoyagTo%}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {%endfor%}
+                                        </select>
+
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Transit By</label>
@@ -183,7 +197,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group" id="amount">
-                                        <label for="tdate">Amount</label>
+                                        <label for="tdate">Sum Insured</label>
                                         <input type="text" class="form-control" id="amounts"
                                                placeholder="Amount"
                                                name="amount">
@@ -241,18 +255,19 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group" id="produce">
                                         <label for="tdate">Producer</label>
-                                        <select class="form-control custom-select mr-sm-2 selectpicker"   data-show-subtext="true" data-live-search="true" name="produce" required>
+                                        <select class="form-control custom-select mr-sm-2 selectpicker"
+                                                data-show-subtext="true" data-live-search="true" name="produce"
+                                                required>
                                             <option selected>Select List</option>
                                             {%for x in producer%}
-                                            <option value="{{x.id}}">ID:{{x.id}}  Name:{{x.Name}} </option>
+                                            <option value="{{x.id}}">ID:{{x.id}} Name:{{x.Name}}</option>
                                             {%endfor%}
                                         </select>
                                     </div>
                                 </div>
-
 
 
                             </div>
@@ -262,16 +277,49 @@
 
                     <!-- /.box-body -->
 
+
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                </form>
+
+                </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Insurance Type</label>
+                                <select class="form-control custom-select mr-sm-2" name="insurancetype" required>
+                                    <option selected>Select List</option>
+                                    {%for x in insuranceType%}
+                                    <option value="{{x.id}}">{{x.name}}</option>
+                                    {%endfor%}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Risk Covered</label>
+                                <select class="form-control custom-select mr-sm-2" name="riskcover" required>
+                                    <option selected>Select List</option>
+                                    {%for x in Risk%}
+                                    <option value="{{x.id}}">{{x.name}}</option>
+                                    {%endfor%}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-    </div>
-
-    </div>
+        </div>
+    </form>
 </section>
 
 
@@ -391,6 +439,7 @@ $.ajax({
 });
 
 });
+
 
 
 

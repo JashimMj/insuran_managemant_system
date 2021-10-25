@@ -554,6 +554,20 @@ def employeesinfoupdateV(request):
 
 
     messages.info(request,'Data save')
+
+    return redirect('/employees/info/')
+
+
+def employeesedudeletestuV(request,id=0):
+    if id != 0:
+        data=EmployeesEducation.objects.filter(pk=id)
+        data.delete()
+    return redirect('/employees/info/')
+
+def employeessaldeletestuV(request,id=0):
+    if id != 0:
+        data=EmployeesSalary.objects.filter(pk=id)
+        data.delete()
     return redirect('/employees/info/')
 
 def branchinfoeditV(request,id=0):
@@ -1154,15 +1168,20 @@ def qmarineV(request):
         address=ClentAddressInformation.objects.all()
         transit=TransitBy.objects.all()
         voya=VoyageVia.objects.all()
+        voyafrom=VoyageFrom.objects.all()
+        VoyagTo=VoyageTo.objects.all()
         dases=datetime.datetime.now()
         dases=datetime.datetime.strftime(dases,'%Y-%m-%d')
         currencys=Currency.objects.all()
         producer=EmployeesinfoM.objects.all()
+        insuranceType=InsuranceType.objects.all()
+        Risk=RiskCover.objects.all()
 
     return render(request, 'underwritting/forms/marine.html',
                   {'currentbranch': currentbranch, 'company': company,'ubranch': ubranch,
                     'Client': Client, 'Bank': Bank,'address':address,'transit':transit,
-                   'voya':voya,'dases':dases,'currencys':currencys,'producer':producer})
+                   'voya':voya,'dases':dases,'currencys':currencys,'producer':producer,'voyafrom':voyafrom,'VoyagTo':VoyagTo,
+                   'insuranceType':insuranceType,'Risk':Risk})
 
 def qmarineselectclientV(request):
     cname = request.GET.get('cnames')
@@ -1337,6 +1356,7 @@ def DesignationPDFV(request):
 
 
 def testV(request):
+        
     return render(request,'test.html')
 
 

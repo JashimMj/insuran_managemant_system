@@ -97,6 +97,8 @@ button:hover {
 
 
 
+
+
 </style>
 <section class="content-header">
     <h1>
@@ -112,22 +114,22 @@ button:hover {
 
 <section class="content">
     <div class="row">
-<nav class="navbar navbar-light bg-light">
-     <div class="col-md-6">
-  <form class="form-inline" action="{%url 'employeesedit'%}" method="POST">
-       {%csrf_token%}
-        <span><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <nav class="navbar navbar-light bg-light">
+            <div class="col-md-6">
+                <form class="form-inline" action="{%url 'employeesedit'%}" method="POST">
+                    {%csrf_token%}
+                    <span><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
        <select class="form-control mr-sm-2 selectpicker" data-show-subtext="true"
-                                   data-live-search="true" name="abcgf" id="branch" required>
+               data-live-search="true" name="abcgf" id="branch" required>
                             <option selected>Select List</option>
                             {%for x in employees%}
                             <option value="{{x.id}}">Name: {{x.Name}} id: {{x.id}}</option>
                             {%endfor%}
                         </select>
 </span>
-  </form>
-     </div>
-</nav>
+                </form>
+            </div>
+        </nav>
         <form id="regForm" action="{%url 'employeesupdate'%}" method="POST" enctype="multipart/form-data">
             {%csrf_token%}
             <!-- One "tab" for each step in the form: -->
@@ -144,7 +146,8 @@ button:hover {
                     </div>
                     <div class="col-md-6">
                         <label>Name</label>
-                        <p><input placeholder="Name" oninput="this.className = ''" name="lname" id="lname" value="{{x.Name}}"></p>
+                        <p><input placeholder="Name" oninput="this.className = ''" name="lname" id="lname"
+                                  value="{{x.Name}}"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Branch Name</label>
@@ -160,7 +163,7 @@ button:hover {
                         <label>Department</label>
                         <p><select class="form-control custom-select mr-sm-2" name="department" id="department"
                                    required>
-                             <option value="{{x.Department.id}}">{{x.Department.Name}}</option>
+                            <option value="{{x.Department.id}}">{{x.Department.Name}}</option>
                             {%for x in dept%}
                             <option value="{{x.id}}">{{x.Name}}</option>
                             {%endfor%}
@@ -184,7 +187,8 @@ button:hover {
                     </div>
                     <div class="col-md-6">
                         <label>Mother Name</label>
-                        <p><input placeholder="Mother Name" oninput="this.className = ''" name="mother_Name" value="{{x.Mother_Name}}"
+                        <p><input placeholder="Mother Name" oninput="this.className = ''" name="mother_Name"
+                                  value="{{x.Mother_Name}}"
                                   id="mother_Name"></p>
                     </div>
                     <div class="col-md-6">
@@ -194,7 +198,6 @@ button:hover {
 
                             <option value="Yes">Yes</option>
                             <option value="NO">No</option>
-
 
 
                         </select></p>
@@ -305,66 +308,70 @@ button:hover {
 
 
             <div class="tab">
-<button class="sums" type="button">+</button>
-                <button class="less" type="button">-</button>
-                 {%for e in education%}
+                <button class="sums" type="button">+</button>
 
-                <div class="edu{{e.id}}">
+                {%for e in education%}
 
-                    <input type="text" value="{{e.id}}" name="eid" class="eid">
-                    <ul id="abd" style="padding:0px;margin:0px;">
+                <div id="edu">
+
+                    <div id="abd0" style="padding:0px;margin:0px;">
 
                         <div class="row" style="border:2px solid gray;">
-                            <h1>Education information Edit</h1>
-                            <div class="col-md-6">
-                                <label>Exam Name</label>
-                                <p><input placeholder="Exam Name" oninput="this.className = ''" name="Ename"
-                                          class="Ename" value="{{e.Exam_Name}}"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label>University Name</label>
-                                <p><input placeholder="Uname" oninput="this.className = ''" name="Uname"
-                                          id="Uname" value="{{e.Institute}}"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Education Board</label>
-                                <p><input placeholder="Education Board" oninput="this.className = ''" name="Eboard"
-                                          id="Eboard" value="{{e.Board}}"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Passing year</label>
-                                <p><input placeholder="Passing year" oninput="this.className = ''" name="Pyear"
-                                          id="pYear" value="{{e.Pass_Year}}"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label>CGPA</label>
-                                <p><input placeholder="CGPA" oninput="this.className = ''" name="cgpa"
-                                          id="cgpa" value="{{e.Gpa}}"></p>
-                            </div>
+                            <div id="dds">
+                                <input type="text" value="{{e.id}}" name="eid" class="eid" hidden>
+                                <h1>Education information Edit</h1>
+                                <div class="col-md-6">
+                                    <label>Exam Name</label>
+                                    <p><input placeholder="Exam Name" oninput="this.className = ''" name="Ename"
+                                              class="Ename" value="{{e.Exam_Name}}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>University Name</label>
+                                    <p><input placeholder="Uname" oninput="this.className = ''" name="Uname"
+                                              id="Uname" value="{{e.Institute}}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Education Board</label>
+                                    <p><input placeholder="Education Board" oninput="this.className = ''" name="Eboard"
+                                              id="Eboard" value="{{e.Board}}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Passing year</label>
+                                    <p><input placeholder="Passing year" oninput="this.className = ''" name="Pyear"
+                                              id="pYear" value="{{e.Pass_Year}}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>CGPA</label>
+                                    <p><input placeholder="CGPA" oninput="this.className = ''" name="cgpa"
+                                              id="cgpa" value="{{e.Gpa}}"></p>
+                                </div>
+                                <div class="col-md-6">
+                                      <a href="{%url 'employeesedudeletestu' e.id %}" class="btn btn-danger" >Delete</a>
 
+                                </div>
+
+                            </div>
                         </div>
-                    </ul>
+                    </div>
 
                 </div>
-                 {%endfor%}
+                {%endfor%}
 
 
             </div>
             <div class="tab">
+                <button class="add" type="button">+</button>
 
-                <div id="mainDiv">
 
-                    <div class="one">
-                        {%for s in salary%}
+                {%for s in salary%}
+                <div id="main1">
+                    <div id="one1">
+
                         <div class="row" style="border:2px solid gray;">
-                            <h1>Employees Salary Information Edit</h1>
-                            <div class="input-field col s1" hidden>
-                                <input class="sno" type="text" name="Sr" value="1">
-                                <label for="Sr">Sr</label>
-                            </div>
+                            <input type="text" name="sal" id="sal" value="{{s.id}}" hidden>
                             <div class="col-md-6">
                                 <label>Effect Date</label>
-                                <p><input placeholder="Effect Date"  name="effect_Date"
+                                <p><input placeholder="Effect Date" name="effect_Date"
                                           class="effect_Date" type="date" value='{{s.Effect_Date|date:"Y-m-d"}}'></p>
                             </div>
                             <div class="col-md-6">
@@ -373,7 +380,8 @@ button:hover {
                             </div>
                             <div class="col-md-12">
                                 <label>House Rent</label>
-                                <p><input placeholder="House Rent"  name="house_Rent" value="{{s.House_Rent}}" class="House_Rent"></p>
+                                <p><input placeholder="House Rent" name="house_Rent" value="{{s.House_Rent}}"
+                                          class="House_Rent"></p>
                             </div>
 
                             <div class="col-md-6">
@@ -390,19 +398,19 @@ button:hover {
                             </div>
                             <div class="col-md-6">
                                 <label>Entertainment_Allowance</label>
-                                <p><input placeholder="Entertainment_Allowance"  value="{{s.Entertainment_Allowance}}"
+                                <p><input placeholder="Entertainment_Allowance" value="{{s.Entertainment_Allowance}}"
                                           name="entertainment_Allowance"
                                           class="Entertainment_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Conveyance Allowance</label>
-                                <p><input placeholder="Conveyance Allowance"  value="{{s.Conveyance_Allowance}}"
+                                <p><input placeholder="Conveyance Allowance" value="{{s.Conveyance_Allowance}}"
                                           name="conveyance_Allowance"
                                           class="Conveyance_Allowance"></p>
                             </div>
                             <div class="col-md-6">
                                 <label>Other Allowance</label>
-                                <p><input placeholder="Other Allowance"  name="other"
+                                <p><input placeholder="Other Allowance" name="other"
                                           value="{{s.Other}}"
                                           class="Other"></p>
                             </div>
@@ -416,24 +424,24 @@ button:hover {
                                           value="{{s.Income_Tax}}"
                                           class="Income_Tax"></p>
                             </div>
-                            <div class="col-md-7">
-                                <button class="add" type="button">+</button>
-                                <button class="delete" type="button">-</button>
+                            <div>
+                                <a href="{%url 'employeessaldeletestu' s.id %}" class="btn btn-danger" >Delete</a>
                             </div>
+
                         </div>
-                        {%endfor%}
                     </div>
                 </div>
+                {%endfor%}
+
+
             </div>
 
 
             <div style="overflow:auto;">
                 <div style="float:right;">
-                     <a href="{%url 'employeesinfo'%}" class="btn btn-warning"> Back </a>
+                    <a href="{%url 'employeesinfo'%}" class="btn btn-warning"> Back </a>
                     <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary">Previous</button>
                     <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-success">Next</button>
-
-                    
 
 
                 </div>
@@ -522,6 +530,8 @@ function fixStepIndicator(n) {
   //... and adds the "active" class on the current step:
   x[n].className += " active";
 }
+
+
 
 
 
@@ -665,41 +675,45 @@ $.ajax({
 
 
 
+
+
 </script>
 
 <script>
 $(".sums").click(function(){
 
-    $('.edu{{educa.id}}').clone().removeClass('.edu{{educa.id}}').appendTo("#abd").find(':input(".eid")').val(" ");
+  var x = $("#abd0"),
+      y = $("#abd0").clone();
+  y.insertAfter("#abd0").find(':input(".eid")').val(" ");
 
   });
-  $(".less").click(function(){
-    $('.edu').closest('.edu').last().remove();
 
-  });
+
+
 
 
 
 
 
 </script>
+<script>
+        $(".add").click(function () {
+
+         var x = $("#one1"),
+      y = $("#one1").clone();
+  x.attr("id", "fileOld");
+  y.insertAfter("#one1").find(':input(".sid")').val(" ");
+
+    });
+    $(".delete").click(function(){
+  $("#one1").last().remove();
+
+  });
+
+</script>
 
 <script>
-$(document).ready(function () {
-    $(".add").click(function () {
-        var length = $('.one').length;
-        var cloned = $(this).closest('.one').clone(true);
-        cloned.appendTo("#mainDiv").find('.sno').val(length + 1);
-        cloned.find(':input:not(".sno")').val(" ");
-        var parent = $(this).closest('.one');
-        calculate(parent);
-    });
-    $('.delete').click(function () {
-        var parent = $(this).closest('.one');
-        $(this).parents(".one").remove();
-        calculate(parent);
-    });
-});
+
 
 $(document).on('keyup', '.basic , .Other ,.Income_Tax, .House_Rent', function () {
 	var parent = $(this).closest('.one');
@@ -743,6 +757,8 @@ function calculate(e){
     });
 
 };
+
+
 </script>
 
 {%endblock%}
